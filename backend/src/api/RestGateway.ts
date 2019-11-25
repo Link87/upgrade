@@ -8,26 +8,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 export class RestGateway {
 
-    constructor (profileService: ProfileService) {
+    constructor (private profileService: ProfileService) {
+    }
+
+    public getRouter() {
       const router = express.Router();
 
       router.get('/profile/:id', async (
-        req: express.Request,
-        response: express.Response,
-        _next: express.NextFunction) => {
-        const id = req.params.id;
-        const profile = await profileService.getProfile(id);
+          req: express.Request,
+          response: express.Response,
+          _next: express.NextFunction) => {
+          const id = req.params.id;
+          const profile = await this.profileService.getProfile(id);
 
-        response.status(200).contentType('application/json').send(profile);
-      });
+          response.status(200).contentType('application/json').send(profile);
+        });
 
       app.use('/', router);
-    }
-
-    public async listen(port: number) {
-      app.listen(port, () => {
-        console.log(`Started app at port ${port}`);
-      });
     }
 
 }
