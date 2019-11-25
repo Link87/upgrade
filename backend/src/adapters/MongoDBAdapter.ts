@@ -8,4 +8,16 @@ export class MongoDBAdapter implements IDatabaseAdapter {
         return new User(id, new Profile('Max Musterman', 'Im an example user.'));
     }
 
+    public async createUser(user: User): Promise<User> {
+        return user;
+    }
+
+    public async updateUser(user: User): Promise<User> {
+        return user;
+    }
+
+    public async deleteUser(id: string): Promise<void> {
+        return;
+    }
+
 }
