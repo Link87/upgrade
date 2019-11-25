@@ -16,7 +16,7 @@ export class MongoDBAdapter implements IDatabaseAdapter {
         return user;
     }
 
-    public async deleteUser(id: string): Promise<void> {
+    public async deleteUser(_id: string): Promise<void> {
         return;
     }
 
