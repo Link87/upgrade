@@ -17,7 +17,7 @@ export class AuthenticationService {
         return id;
     }
 
-    public async verifyLoginData(username: string, password: string) {
+    public async verifyLoginData(username: string, password: string): Promise<User | null> {
         // Also not secure
         const user = await this.userService.findUser(username);
 
@@ -25,7 +25,7 @@ export class AuthenticationService {
             return null;
         }
 
-        return user.loginCredentials.password === password;
+        return (user.loginCredentials.password === password) ? user : null;
     }
 
     // Creates user and returns login token
