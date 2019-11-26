@@ -1,8 +1,7 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import { ProfileService } from '../services/ProfileService';
-import { RestGateway } from './RestGateway';
 import { LoginGateway } from './LoginGateway';
+import { RestGateway } from './RestGateway';
 
 const app: express.Application = express();
 app.use(bodyParser.json());
@@ -12,8 +11,8 @@ export class HttpGateway {
 
     constructor (restGateway: RestGateway, loginGateway: LoginGateway) {
         const router = express.Router();
-        router.use("/api", restGateway);
-        router.use("/login", loginGateway.getRouter());
+        router.use('/api', restGateway.getRouter());
+        router.use('/auth', loginGateway.getRouter());
         app.use('/', router);
     }
 

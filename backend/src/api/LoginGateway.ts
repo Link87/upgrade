@@ -1,20 +1,31 @@
 import * as express from 'express';
-import { ProfileService } from '../services/ProfileService';
+import { AuthenticationService } from '../services/AuthenticationService';
 
 export class LoginGateway {
 
-    public getRouter() {
+    public constructor (private authenticationService: AuthenticationService) {
+    }
+
+    public getRouter(): express.Router {
         const router = express.Router();
 
-        router.post('login', async (
+        router.post('/login', async (
           req: express.Request,
           response: express.Response,
           _next: express.NextFunction) => {
+                const username = req.body.username;
+                const password = req.body.password;
 
-          response.status(200).contentType('application/json').send('ok');
+                const user = await this.authenticationService.verifyLoginData(username, password);
+                if (user === null) {
+                    response.status(403).send('Access Denied.');
+                } else {
+                    const token = await this.authenticationService.createToken(user.id);
+                    response.status(200).send(token);
+                }
         });
 
-        router.use('/', router);
+        return router;
     }
 
 }

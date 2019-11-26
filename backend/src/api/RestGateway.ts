@@ -1,17 +1,12 @@
-import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { ProfileService } from '../services/ProfileService';
-
-const app: express.Application = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 export class RestGateway {
 
     constructor (private profileService: ProfileService) {
     }
 
-    public getRouter() {
+    public getRouter(): express.Router {
       const router = express.Router();
 
       router.get('/profile/:id', async (
@@ -24,7 +19,7 @@ export class RestGateway {
           response.status(200).contentType('application/json').send(profile);
         });
 
-      app.use('/', router);
+      return router;
     }
 
 }
