@@ -25,6 +25,7 @@ export class LoginGateway {
                 }
         });
 
+<<<<<<< HEAD
         router.post('/create', async (
             req: express.Request,
             response: express.Response,
@@ -41,6 +42,8 @@ export class LoginGateway {
                   }
           });
 
+=======
+>>>>>>> 6ad13f822da0a37a22d6ddf9a2621776c53fcdab
         return router;
     }
 

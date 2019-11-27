@@ -13,12 +13,17 @@ export class UserService {
         return this.database.createUser(user);
     }
 
+<<<<<<< HEAD
     public async getUserByUsername(username: string): Promise<User | null> {
         return this.database.getUserByUsername(username);
     }
 
     public async getUserById(id: string): Promise<User | null> {
         return this.database.getUserById(id);
+=======
+    public async findUser(username: string): Promise<User | null> {
+        return this.database.getUser(username);
+>>>>>>> 6ad13f822da0a37a22d6ddf9a2621776c53fcdab
     }
 
     public async deleteUser(id: string): Promise<void> {
