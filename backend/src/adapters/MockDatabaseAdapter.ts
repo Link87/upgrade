@@ -10,7 +10,6 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
 
     private users: User[] = [];
 
-<<<<<<< HEAD
     public async getUserById(id: string): Promise<User | null> {
         const usersWithId = this.users.filter(user => user.id === id);
 
@@ -22,9 +21,6 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
     }
 
     public async getUserByUsername(id: string): Promise<User | null> {
-=======
-    public async getUser(id: string): Promise<User | null> {
->>>>>>> 6ad13f822da0a37a22d6ddf9a2621776c53fcdab
         const usersWithId = this.users.filter(user => user.id === id);
 
         if (usersWithId.length > 0) {
