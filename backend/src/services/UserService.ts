@@ -13,8 +13,12 @@ export class UserService {
         return this.database.createUser(user);
     }
 
-    public async findUser(username: string): Promise<User | null> {
-        return this.database.getUser(username);
+    public async getUserByUsername(username: string): Promise<User | null> {
+        return this.database.getUserByUsername(username);
+    }
+
+    public async getUserById(id: string): Promise<User | null> {
+        return this.database.getUserById(id);
     }
 
     public async deleteUser(id: string): Promise<void> {

@@ -10,7 +10,17 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
 
     private users: User[] = [];
 
-    public async getUser(id: string): Promise<User | null> {
+    public async getUserById(id: string): Promise<User | null> {
+        const usersWithId = this.users.filter(user => user.id === id);
+
+        if (usersWithId.length > 0) {
+            return usersWithId[0];
+        } else {
+            return null;
+        }
+    }
+
+    public async getUserByUsername(id: string): Promise<User | null> {
         const usersWithId = this.users.filter(user => user.id === id);
 
         if (usersWithId.length > 0) {

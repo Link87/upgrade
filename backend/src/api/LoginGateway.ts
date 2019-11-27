@@ -25,6 +25,22 @@ export class LoginGateway {
                 }
         });
 
+        router.post('/create', async (
+            req: express.Request,
+            response: express.Response,
+            _next: express.NextFunction) => {
+                  const username = req.body.username;
+                  const password = req.body.password;
+
+                  const user = await this.authenticationService.createUserByLoginData(username, password);
+                  if (user === null) {
+                      response.status(403).send('User already exists.');
+                  } else {
+                      const token = await this.authenticationService.createToken(user.id);
+                      response.status(200).send(token);
+                  }
+          });
+
         return router;
     }
 

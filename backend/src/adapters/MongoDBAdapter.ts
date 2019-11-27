@@ -5,7 +5,11 @@ import { User } from '../models/User';
 
 export class MongoDBAdapter implements IDatabaseAdapter {
 
-    public async getUser(id: string): Promise<User> {
+    public async getUserById(id: string): Promise<User> {
+        return new User(id, new Profile('Max Musterman', 'Im an example user.'), new LoginCredentials('username', 'password'));
+    }
+
+    public async getUserByUsername(id: string): Promise<User> {
         return new User(id, new Profile('Max Musterman', 'Im an example user.'), new LoginCredentials('username', 'password'));
     }
 
