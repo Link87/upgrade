@@ -1,25 +1,40 @@
 import * as express from 'express';
 import { ProfileService } from '../services/ProfileService';
+import profile from './rest/profile';
 
 export class RestGateway {
 
-    constructor (private profileService: ProfileService) {
+    private readonly router: express.Router;
+
+    constructor(profileService: ProfileService) {
+        this.router = express.Router();
+
+        // create middleware for v1 api version
+        const api = express.Router({ mergeParams: true });
+        this.router.use('/v1', api);
+
+        api.use('/profile', profile(profileService));
+
+        // endpoint invalid (=> 404 not found)
+        api.use(async (
+            _req: express.Request,
+            res: express.Response,
+        ) => {
+            res.status(404).end();
+        });
+
+        // catch wrong api version (currently all other than v1, => 501 not implemented)
+        this.router.use(async (
+            _req: express.Request,
+            res: express.Response,
+        ) => {
+            res.status(501).end();
+        });
     }
 
     public getRouter(): express.Router {
-      const router = express.Router();
-
-      router.get('/profile/:id', async (
-          req: express.Request,
-          response: express.Response,
-          _next: express.NextFunction) => {
-          const id = req.params.id;
-          const profile = await this.profileService.getProfile(id);
-
-          response.status(200).contentType('application/json').send(profile);
-        });
-
-      return router;
+        return this.router;
     }
-
 }
+
+export default RestGateway;
