@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { LoginGateway } from './LoginGateway';
-import { RestGateway } from './RestGateway';
+import RestGateway from './RestGateway';
 
 const app: express.Application = express();
 app.use(bodyParser.json());

@@ -1,43 +1,19 @@
 import * as express from 'express';
 import { ProfileService } from '../services/ProfileService';
+import profile from './rest/profile';
 
 export class RestGateway {
 
-    constructor(private profileService: ProfileService) {}
+    private readonly router: express.Router;
 
-    public getRouter(): express.Router {
-        const router = express.Router();
+    constructor(profileService: ProfileService) {
+        this.router = express.Router();
 
         // create middleware for v1 api version
-        const api = express.Router({mergeParams: true});
-        router.use('/v1', api);
+        const api = express.Router({ mergeParams: true });
+        this.router.use('/v1', api);
 
-        api.get('/profile/:id', async (
-            req: express.Request,
-            res: express.Response) => {
-            const id = req.params.id;
-            const profile = await this.profileService.getProfile(id);
-
-            res.status(200).contentType('application/json').send(profile);
-        });
-        api.get('/profile/:id/name', async (
-            _req: express.Request,
-            res: express.Response) => {
-            // const id = req.params.id;
-            // const profile = await this.profileService.getProfile(id);
-
-            res.status(501).end();
-            // res.status(200).contentType('text/plain').send(profile.getName());
-        });
-        api.get('/profile/:id/description', async (
-            _req: express.Request,
-            res: express.Response) => {
-            // const id = req.params.id;
-            // const profile = await this.profileService.getProfile(id);
-
-            res.status(501).end();
-            // res.status(200).contentType('text/plain').send(profile.getDescription());
-        });
+        api.use('/profile', profile(profileService));
 
         // endpoint invalid (=> 404 not found)
         api.use(async (
@@ -48,13 +24,17 @@ export class RestGateway {
         });
 
         // catch wrong api version (currently all other than v1, => 501 not implemented)
-        router.use(async (
+        this.router.use(async (
             _req: express.Request,
             res: express.Response,
         ) => {
             res.status(501).end();
         });
+    }
 
-        return router;
+    public getRouter(): express.Router {
+        return this.router;
     }
 }
+
+export default RestGateway;
