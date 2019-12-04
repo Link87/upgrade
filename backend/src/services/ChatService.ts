@@ -14,9 +14,12 @@ export class ChatService {
         this.database.appendChatMessageToChat(message.senderId, message.receiverId, message);
     }
 
-    public async getChatMessagesForChat(fistUserId: string, secondUserId: string): Promise<ChatMessage[]> {
-        
+    public async getChatMessagesForChat(firstUserId: string, secondUserId: string): Promise<ChatMessage[]> {
+        return this.database.getChatMessagesForChat(firstUserId, secondUserId);
     }
 
+    public async getChatsForUser(userId: string): Promise<string[]> {
+        return this.database.getChatsForUser(userId);
+    }
 
 }
