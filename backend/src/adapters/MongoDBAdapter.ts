@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
+import { ChatMessage } from '../models/ChatMessage';
 import { User } from '../models/User';
 
 export class MongoDBAdapter implements IDatabaseAdapter {
@@ -42,6 +43,24 @@ export class MongoDBAdapter implements IDatabaseAdapter {
     public async deleteUser(id: string): Promise<void> {
         this.client.db(this.dbName).collection(this.collectionName).deleteOne({ id });
         return;
+    }
+
+    public async getChatsForUser(_userId: string): Promise<string[]> {
+       return [];
+    }
+
+    public async getChatMessagesForChat(_firstUserId: string, _secondUserId: string): Promise<ChatMessage[]> {
+        return [];
+    }
+
+    public async appendChatMessageToChat(_firstUserId: string,
+                                         _secondUserId: string,
+                                         _message: ChatMessage): Promise<void> {
+        return;
+    }
+
+    public async subscribeToChatsForUser(_userId: string, _onMessage: (message: ChatMessage) => void): Promise<void> {
+       return;
     }
 
 }
