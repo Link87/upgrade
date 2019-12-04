@@ -1,5 +1,5 @@
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
-import { ChatMessage } from '../models/ChatMessage'
+import { ChatMessage } from '../models/ChatMessage';
 
 export class ChatService {
 
