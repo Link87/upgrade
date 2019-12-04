@@ -2,7 +2,9 @@ import { User } from '../models/User';
 
 export interface IDatabaseAdapter {
 
-    getUser(id: string): Promise<User>;
+    getUserById(id: string): Promise<User | null>;
+
+    getUserByUsername(id: string): Promise<User | null>;
 
     createUser(user: User): Promise<User>;
 

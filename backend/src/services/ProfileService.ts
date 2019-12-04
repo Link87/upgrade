@@ -1,13 +1,19 @@
-import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
 import { Profile } from '../models/Profile';
+import { UserService } from './UserService';
 
 export class ProfileService {
 
-    constructor (private database: IDatabaseAdapter) {
+    constructor (private userService: UserService) {
     }
 
-    public async getProfile(id: string): Promise<Profile> {
-        return (await this.database.getUser(id)).profile;
+    public async getProfile(id: string): Promise<Profile | null> {
+        const user = (await this.userService.getUserById(id));
+
+        if (user !== null) {
+            return user.profile;
+        } else {
+            return null;
+        }
     }
 
 }
