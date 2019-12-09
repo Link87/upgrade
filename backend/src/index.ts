@@ -1,14 +1,15 @@
-import { IDatabaseAdapter } from './adapters/IDatabaseAdapter';
-import { MockDatabaseAdapter } from './adapters/MockDatabaseAdapter';
 import { HttpGateway } from './api/HttpGateway';
 import { LoginGateway } from './api/LoginGateway';
 import { RestGateway } from './api/RestGateway';
 import { AuthenticationService } from './services/AuthenticationService';
 import { ProfileService } from './services/ProfileService';
 import { UserService } from './services/UserService';
+import { MongoDBAdapter } from './adapters/MongoDBAdapter';
 
-const database: IDatabaseAdapter = new MockDatabaseAdapter();
-const userService = new UserService(database);
+const mongoDB: MongoDBAdapter = new MongoDBAdapter();
+console.log(mongoDB);
+
+const userService = new UserService(mongoDB);
 const profileService = new ProfileService(userService);
 
 const authenticationService = new AuthenticationService(userService, 'hunter22');
