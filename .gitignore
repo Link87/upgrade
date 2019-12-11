@@ -1,3 +1,10 @@
+# NodeJS
+
 node_modules
 dist
 package-lock.json
+
+# IntelliJ configuration files
+
+.idea
+*.iml
