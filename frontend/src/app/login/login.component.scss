@@ -1,11 +1,27 @@
+.top-section {
+  border-bottom: 1px solid;
+  border-color: black;
+  padding: 20px 0;
+
+}
+
+.center-section {
+  background-image: url("../../assets/img/header.jpg");
+  background-attachment: fixed;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .login-box {
   background-color: #dddddd;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   padding: 30px 30px 40px;
+  margin-top: 100px;
 }
 
-.form-heading {
+.login-box h2 {
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
