@@ -1,12 +1,33 @@
-<h2>Anmelden</h2>
-<form novalidate>
-  <div class="form-group">
-    <label for="email_input">E-Mail</label>
-    <input type="email" class="form-control" id="email_input">
+<div class="container-fluid h-100">
+  <div class="row d-flex justify-content-center">
+    <div class="d-flex justify-content-center col-md-6">
+      <img src="assets/img/upGrade.png" alt="upgrade">
+    </div>
   </div>
-  <div class="form-group">
-    <label for="password_input">Passwort</label>
-    <input type="password" class="form-control" id="password_input">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+      <div class="login-box">
+        <h2 class="form-heading">Anmelden</h2>
+        <form novalidate>
+          <div class="form-group mb-3">
+            <label for="email_input">E-Mail</label>
+            <input type="email" class="form-control" id="email_input" placeholder="E-Mail-Adresse">
+          </div>
+          <div class="form-group mb-1">
+            <label for="password_input">Passwort</label>
+            <input type="password" class="form-control" id="password_input" placeholder="Passwort">
+          </div>
+          <div class="d-flex justify-content-end mb-4">
+            <a href="#">Passwort vergessen</a>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-login btn-primary">Anmelden</button>
+          </div>
+        </form>
+        <div class="d-flex justify-content-center mt-4">
+          Noch keinen Account? <a routerLink="/register" class="ml-2">Registriere dich</a>
+        </div>
+      </div>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">Anmelden</button>
-</form>
+</div>
