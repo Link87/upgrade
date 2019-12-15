@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'upGrade';
+
+  navbarVisible = true;
+
+  updatePadding(navbarVisible: boolean) {
+    this.navbarVisible = navbarVisible;
+  }
 }

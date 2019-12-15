@@ -7,10 +7,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: '', component: HomeComponent },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'login', component: LoginComponent, data: { navbar: false }},
+  { path: 'register', component: RegisterComponent, data: { navbar: false }},
+  { path: '', component: HomeComponent, data: { navbar: true }},
+  { path: '**', component: PageNotFoundComponent, data: { navbar: true }}
 ];
 
 @NgModule({
