@@ -17,11 +17,13 @@
   "author": "group16",
   "license": "",
   "dependencies": {
+    "@types/cors": "^2.8.6",
     "@types/mongodb": "^3.3.12",
     "bcrypt": "^3.0.7",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.12",
+    "cors": "^2.8.5",
     "express": "^4.16.3",
     "expressjs": "^1.0.1",
     "jsonwebtoken": "^8.5.1",

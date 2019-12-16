@@ -18,10 +18,10 @@ export class LoginGateway {
 
                 const user = await this.authenticationService.verifyLoginData(username, password);
                 if (user === null) {
-                    response.status(403).send('Access Denied.');
+                    response.status(403).send({ error: 'Access Denied.' });
                 } else {
                     const token = await this.authenticationService.createToken(user.id);
-                    response.status(200).send(token);
+                    response.status(200).send({ token });
                 }
         });
 
@@ -34,10 +34,10 @@ export class LoginGateway {
 
                   const user = await this.authenticationService.createUserByLoginData(username, password);
                   if (user === null) {
-                      response.status(403).send('User already exists.');
+                      response.status(403).send({ error: 'User already exists.' });
                   } else {
                       const token = await this.authenticationService.createToken(user.id);
-                      response.status(200).send(token);
+                      response.status(200).send({ token });
                   }
           });
 

@@ -5,14 +5,16 @@ import { AuthenticationService } from './services/AuthenticationService';
 import { ProfileService } from './services/ProfileService';
 import { UserService } from './services/UserService';
 import { MongoDBAdapter } from './adapters/MongoDBAdapter';
+import { MockDatabaseAdapter } from './adapters/MockDatabaseAdapter';
 
 const mongoDB: MongoDBAdapter = new MongoDBAdapter();
 console.log(mongoDB);
 
-const userService = new UserService(mongoDB);
+const userService = new UserService(new MockDatabaseAdapter());
 const profileService = new ProfileService(userService);
 
 const authenticationService = new AuthenticationService(userService, 'hunter22');
+authenticationService.createUserByLoginData("test", "test")
 
 const loginGateway = new LoginGateway(authenticationService);
 const restGateway = new RestGateway(profileService);
