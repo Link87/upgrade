@@ -1,42 +1,60 @@
-<h2>Registrieren</h2>
-<form novalidate>
-  <div class="form-row mb-2">
-    <div class="col-md-6">
-      <label for="name_input">Vorname</label>
-      <input type="text" class="form-control" id="name_input">
-    </div>
-    <div class="col-md-6">
-      <label for="surname_input">Nachname</label>
-      <input type="text" class="form-control" id="surname_input">
-    </div>
-  </div>
-  <div class="form-row mb-2">
-    <div class="col-md-10">
-      <label for="street_input">Straße</label>
-      <input type="text" class="form-control" id="street_input">
-    </div>
-    <div class="col-md-2">
-      <label for="house_number_input">Hausnummer</label>
-      <input type="text" class="form-control" id="house_number_input">
-    </div>
-  </div>
-  <div class="form-row mb-2">
+<div class="container-fluid d-flex justify-content-center flex-column vh-100 w-100">
+  <div class="row d-flex justify-content-center top-section">
     <div class="col-md-4">
-      <label for="zip_code_input">Postleitzahl</label>
-      <input type="text" class="form-control" id="zip_code_input">
-    </div>
-    <div class="col-md-8">
-      <label for="city_input">Stadt</label>
-      <input type="text" class="form-control" id="city_input">
+      <img src="assets/img/upGrade.png" class="img-fluid" alt="upgrade">
     </div>
   </div>
-  <div class="form-group mb-2">
-      <label for="email_input">E-Mail</label>
-      <input type="email" class="form-control" id="email_input">
+  <div class="row d-flex justify-content-center flex-grow-1 center-section">
+    <div class="col-md-4">
+      <div class="login-box">
+        <h2>Registrieren</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="form-row mb-3">
+            <div class="col-md-6">
+              <label for="name_input">Vorname</label>
+              <input type="text" formControlName="firstname" class="form-control" id="name_input" placeholder="Vorname">
+            </div>
+            <div class="col-md-6">
+              <label for="surname_input">Nachname</label>
+              <input type="text" formControlName="lastname" class="form-control" id="surname_input" placeholder="Nachname">
+            </div>
+          </div>
+          <div class="form-row mb-3">
+            <div class="col-md-8">
+              <label for="street_input">Straße</label>
+              <input type="text" formControlName="street" class="form-control" id="street_input" placeholder="Straße">
+            </div>
+            <div class="col-md-4">
+              <label for="house_number_input">Hausnummer</label>
+              <input type="text" formControlName="housenumber" class="form-control" id="house_number_input" placeholder="Hausnummer">
+            </div>
+          </div>
+          <div class="form-row mb-3">
+            <div class="col-md-4">
+              <label for="zip_code_input">Postleitzahl</label>
+              <input type="text" formControlName="zipcode" class="form-control" id="zip_code_input" placeholder="Postleitzahl">
+            </div>
+            <div class="col-md-8">
+              <label for="city_input">Stadt</label>
+              <input type="text" formControlName="city" class="form-control" id="city_input" placeholder="Stadt">
+            </div>
+          </div>
+          <div class="form-group mb-3">
+              <label for="email_input">E-Mail</label>
+              <input type="email" formControlName="email" class="form-control" id="email_input" placeholder="E-Mail-Adresse">
+            </div>
+          <div class="form-group mb-3">
+            <label for="password_input">Passwort</label>
+            <input type="password" formControlName="password" class="form-control" id="password_input" placeholder="Passwort">
+          </div>
+          <div class="d-flex justify-content-center mt-4">
+            <button type="submit" class="btn btn-login btn-primary">Registrieren</button>
+          </div>
+        </form>
+        <div class="d-flex justify-content-center mt-4">
+          Du hast bereits einen Account? <a routerLink="/login" class="ml-2">Anmelden</a>
+        </div>
+      </div>
     </div>
-  <div class="form-group">
-    <label for="password_input">Passwort</label>
-    <input type="password" class="form-control" id="password_input">
   </div>
-  <button type="submit" class="btn btn-primary">Registrieren</button>
-</form>
+</div>

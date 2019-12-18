@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes }  from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent},
-  { path: '**', component: PageNotFoundComponent }
-]
+  { path: 'login', component: LoginComponent, data: { navbar: false }},
+  { path: 'register', component: RegisterComponent, data: { navbar: false }},
+  { path: '', component: HomeComponent, data: { navbar: true }},
+  { path: '**', component: PageNotFoundComponent, data: { navbar: true }}
+];
 
 @NgModule({
   declarations: [],
