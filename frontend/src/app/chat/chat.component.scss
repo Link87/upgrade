@@ -1,0 +1,77 @@
+.chat-box {
+    background-color: #ffffff;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 30px 30px 40px;
+}
+
+.text-message-sender {
+    background-color: #0f3052;
+    color: #ffffff;
+    border-radius: 20px;
+    margin-top: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    margin-left: 400px;
+}
+
+.text-message-receiver {
+    background-color: #e2f1f8;
+    border-radius: 20px;
+    margin-top: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    margin-right: 400px;
+}
+
+.offer-message-receiver {
+    background-color: #e2f1f8;
+    border-radius: 20px;
+    margin-top: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    margin-right: 400px;
+}
+
+.offer-message-sender {
+    background-color: #0f3052;
+    color: #ffffff;
+    border-radius: 20px;
+    margin-top: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    margin-left: 400px;
+}
+
+
+.info {
+}
+
+.price-receiver {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+
+.price-sender {
+    color: #42ff62;
+    font-weight: bold;
+}
+
+.status-rejected {
+    background-color: #ff2b7c;
+    padding: 4px;
+    color: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.status-pending {
+    background-color: #7287ff;
+    padding: 4px;
+    color: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    text-align: center;
+}
