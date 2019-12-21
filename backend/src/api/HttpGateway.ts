@@ -1,6 +1,7 @@
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
+import * as helmet from 'helmet';
 import LoginGateway from './LoginGateway';
 import RestGateway from './RestGateway';
 
@@ -8,6 +9,7 @@ const app: express.Application = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors()); // Insecure af
+app.use(helmet());
 
 export class HttpGateway {
 
@@ -44,6 +46,10 @@ export class HttpGateway {
                   });
                   socket.on('chat message', function(msg){
                     $('#messages').append($('<li>').text(msg));
+                  });
+                  socket.on('error', function(err) {
+                    $('#messages').append($('<li style=\"color: red\">').text(err));
+                    console.log(err);
                   });
                 });
               </script>

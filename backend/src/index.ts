@@ -23,7 +23,7 @@ async function main() {
     const restGateway = new RestGateway(profileService);
     const httpGateway = new HttpGateway(restGateway, loginGateway);
     const server = await httpGateway.listen(3000);
-    new ChatGateway().listen(server);
+    new ChatGateway(authenticationService).listen(server);
 }
 
 main();
