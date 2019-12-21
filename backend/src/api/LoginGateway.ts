@@ -45,3 +45,5 @@ export class LoginGateway {
     }
 
 }
+
+export default LoginGateway;
