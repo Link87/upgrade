@@ -1,11 +1,11 @@
-<div class="container-fluid d-flex justify-content-center flex-column vh-100 w-100">
+<div class="container-fluid d-flex justify-content-center flex-column w-100" style="min-height: 100vh">
   <div class="row d-flex justify-content-center top-section">
-    <div class="col-md-4">
-      <img src="assets/img/upGrade.png" class="img-fluid" alt="upgrade">
-    </div>
+    <a routerLink="/" class="h-100">
+      <img src="assets/img/upGrade.png" class="h-100" alt="upgrade">
+    </a>
   </div>
   <div class="row d-flex justify-content-center flex-grow-1 center-section">
-    <div class="col-md-4">
+    <div class="col-xl-4 col-md-6 col-sm-10">
       <div class="login-box">
         <h2>Registrieren</h2>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>

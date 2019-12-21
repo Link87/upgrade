@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatMessage, OfferMessage, TextMessage, Offer  } from '../models/chat.models';
 import { ChatService } from './chat.service';
@@ -8,10 +8,12 @@ import { ChatService } from './chat.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('scrollMe', { static:  false }) private scrollContainer: ElementRef;
   writeGroup: FormGroup;
+
+  @ViewChild('scrollable', { static:  false }) private scrollable: ElementRef;
+  @ViewChildren('messages') private messagesInDom: QueryList<any>;
 
   messages: ChatMessage[] = [];
   userId = 'Quexten';
@@ -39,17 +41,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.writeGroup = new FormGroup({
       message: new FormControl('', Validators.required)
     });
-    this.scrollToBottom();
   }
 
-  ngAfterViewChecked() {
-    this.scrollToBottom();
+  ngAfterViewInit() {
+    this.messagesInDom.changes.subscribe(this.scrollToBottom);
   }
 
-  scrollToBottom(): void {
+  scrollToBottom = () => {
     try {
-        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+        this.scrollable.nativeElement.scrollTop = this.scrollable.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error(err);
+    }
 }
 
   async onSubmit() {

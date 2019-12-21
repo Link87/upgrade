@@ -1,8 +1,8 @@
-<div class="container-fluid d-flex justify-content-center w-100 chat-area" #scrollMe>
+<div class="container-fluid d-flex justify-content-center w-100 chat-area" #scrollable>
   <div class="row d-flex justify-content-center w-100 h-100" >
     <div class="col-md-12">
       <div class="chat-box">
-        <div *ngFor="let item of messages; let i = index">
+        <div *ngFor="let item of messages; let i = index" #messages>
           <div *ngIf="item.messageType=='text'">
             <div class="message message-sender" *ngIf="item.senderId === userId">
               <strong>{{item.senderId}}</strong><br>
