@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './chat/chat.component';
 
@@ -29,6 +29,7 @@ import { ChatComponent } from './chat/chat.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     ButtonsModule.forRoot(),

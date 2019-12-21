@@ -10,9 +10,9 @@ import { ChatComponent } from './chat/chat.component';
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, data: { navbar: false }},
   { path: 'register', component: RegisterComponent, data: { navbar: false }},
-  { path: 'chat', component: ChatComponent, data: { navbar: true}},
-  { path: '', component: HomeComponent, data: { navbar: true }},
-  { path: '**', component: PageNotFoundComponent, data: { navbar: true }},
+  { path: 'chat', component: ChatComponent },
+  { path: '', component: HomeComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

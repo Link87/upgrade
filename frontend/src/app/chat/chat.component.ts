@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { ChatMessage } from '../models/chatmessage';
 import { TextMessage } from '../models/textmessage';
 import { OfferMessage } from '../models/offermessage';
@@ -9,6 +10,8 @@ import { OfferMessage } from '../models/offermessage';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
+
+  messageGroup: FormGroup;
 
   messages: ChatMessage[] = [];
   userId = 'Quexten';
@@ -26,6 +29,9 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.messageGroup = new FormGroup({
+      message: new FormControl()
+     });
   }
 
 }

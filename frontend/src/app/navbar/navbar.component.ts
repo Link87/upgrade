@@ -31,9 +31,7 @@ export class NavbarComponent implements OnInit {
       mergeMap(route => route.data),
     )
     .subscribe(event => {
-      if (event.navbar != null) {
-        this.setVisible(event.navbar); // show the navbar?
-      }
+      this.setVisible(event.navbar === undefined || event.navbar); // show the navbar?
     });
 
   }
