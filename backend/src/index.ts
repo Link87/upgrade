@@ -3,11 +3,11 @@ import HttpGateway from './api/HttpGateway';
 import LoginGateway from './api/LoginGateway';
 import RestGateway from './api/RestGateway';
 
+import { MockDatabaseAdapter } from './adapters/MockDatabaseAdapter';
+import { MongoDBAdapter } from './adapters/MongoDBAdapter';
 import { AuthenticationService } from './services/AuthenticationService';
 import { ProfileService } from './services/ProfileService';
 import { UserService } from './services/UserService';
-import { MongoDBAdapter } from './adapters/MongoDBAdapter';
-import { MockDatabaseAdapter } from './adapters/MockDatabaseAdapter';
 
 async function main() {
     const mongoDB: MongoDBAdapter = new MongoDBAdapter();
@@ -17,7 +17,7 @@ async function main() {
     const profileService = new ProfileService(userService);
 
     const authenticationService = new AuthenticationService(userService, 'hunter22');
-    authenticationService.createUserByLoginData("test", "test")
+    authenticationService.createUserByLoginData('test', 'test');
 
     const loginGateway = new LoginGateway(authenticationService);
     const restGateway = new RestGateway(profileService);

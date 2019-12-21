@@ -43,7 +43,7 @@ export class AuthenticationService {
 
         const salt = await genSalt(saltRounds);
         const passwordHash = await hash(password, salt);
-        
+
         const loginCredentials = new LoginCredentials(username, passwordHash);
         const user = await this.userService.createUser(loginCredentials);
 

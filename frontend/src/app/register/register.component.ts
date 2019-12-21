@@ -30,11 +30,11 @@ export class RegisterComponent implements OnInit {
   async onSubmit() {
     try {
       const token = await this.loginService.create(this.loginForm.controls.email.value,
-                            this.loginForm.controls.password.value)
-      //got token, should set profile data with a second request
-      console.log(token)
+                            this.loginForm.controls.password.value);
+      // TODO got token, should set profile data with a second request
+      console.log(token);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
