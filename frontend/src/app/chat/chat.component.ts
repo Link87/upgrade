@@ -20,7 +20,6 @@ export class ChatComponent implements OnInit, AfterViewInit {
   messages: ChatMessage[] = [];
   userId = '';
   receiverId = '';
-  inputText = '';
 
   constructor(private chatService: ChatService, private authenticationService: AuthenticationService, private _route: ActivatedRoute) {
     this.chatService.messages.subscribe(data => {
