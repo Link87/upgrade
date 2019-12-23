@@ -1,7 +1,7 @@
 <div class="container-fluid d-flex justify-content-center w-100 chat-area" #scrollable>
   <div class="row d-flex justify-content-center w-100 h-100" >
     <div class="col-md-12">
-      <div class="chat-box">
+      <div class="chat-box" style="margin-bottom: 80px">
         <div *ngFor="let item of messages; let i = index" #messages>
           <div *ngIf="item.messageType=='text'">
             <div class="message message-sender" *ngIf="item.senderId === userId">
@@ -54,5 +54,9 @@
         </div>
       </form>
     </div>
+  </div>
+  <div style="position: fixed; left: 0; bottom: 0; width: 100%; background-color: white">
+    <input type="email" (keyup.enter)="sendTextMessage(inputText)" class="form-control inline" id="exampleInputEmail1" [(ngModel)]="inputText" style="display: inline-block; width: 80%" aria-describedby="emailHelp" placeholder="Enter Message">
+    <button type="submit" class="btn btn-primary inline" style="display: inline-block; width: 20%" (click)="sendTextMessage(inputText)">Send</button>
   </div>
 </div>

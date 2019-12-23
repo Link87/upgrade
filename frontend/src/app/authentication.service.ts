@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import * as jwt_decode from 'jwt-decode';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +39,15 @@ export class AuthenticationService {
     return token;
   }
 
-  public get token(): Subject<string> {
+  public get token(): Observable<string> {
     return this._token;
+  }
+
+  public get userId(): Observable<string> {
+    return this._token.pipe(map(token => {
+      const decode: any =  jwt_decode(token)
+      return decode.userId
+    }))
   }
 
 }

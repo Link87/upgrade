@@ -10,7 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, data: { navbar: false }},
   { path: 'register', component: RegisterComponent, data: { navbar: false }},
-  { path: 'chat', component: ChatComponent },
+  { path: 'chat/:id', component: ChatComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

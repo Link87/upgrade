@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
-import { Observable } from 'rxjs';
-import { ChatMessage } from '../models/chat.models';
+import { Observable, Subject } from 'rxjs';
+import { ChatMessage, TextMessage } from '../models/chat.models';
+import { AuthenticationService } from '../authentication.service';
 
 @Injectable({
   providedIn: 'root'
-})
+})  
 export class ChatService {
 
   private socket: SocketIOClient.Socket;
+  private messageObservable: Subject<ChatMessage> = new Subject<ChatMessage>()
 
-  constructor() {
-    this.socket = io('http://localhost:3000');
+  constructor(private authenticationService: AuthenticationService) {
+    authenticationService.token.subscribe(token => {
+      this.socket = io('http://localhost:3000?token=' + token);
+      this.socket.on('text-message', (message: TextMessage) => {
+        this.messageObservable.next(message)
+      })
+    })
   }
 
-  public send(message: ChatMessage) {
-    this.socket.emit('chat message', message);
-    console.log('message sent: ' + message);
+  public send(message: TextMessage) {
+    this.socket.emit('text-message', message);
   }
 
-  public messageReceived() {
-    const observable = new Observable<ChatMessage>(observer => {
-      this.socket.on('chat message', data => {
-        console.log('message received: ' + data);
-        observer.next(data);
-      });
-      return () => {
-        this.socket.disconnect();
-      };
-    });
-    return observable;
+  get messages(): Observable<ChatMessage> {
+    return this.messageObservable;
   }
+
 }

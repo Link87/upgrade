@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, QueryList, 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatMessage, OfferMessage, TextMessage, Offer  } from '../models/chat.models';
 import { ChatService } from './chat.service';
+import { AuthenticationService } from '../authentication.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -16,31 +18,28 @@ export class ChatComponent implements OnInit, AfterViewInit {
   @ViewChildren('messages') private messagesInDom: QueryList<any>;
 
   messages: ChatMessage[] = [];
-  userId = 'Quexten';
+  userId = '';
+  receiverId = '';
+  inputText = '';
 
-  constructor(private chatService: ChatService) {
-
-    this.chatService.messageReceived().subscribe(data => {
+  constructor(private chatService: ChatService, private authenticationService: AuthenticationService, private _route: ActivatedRoute) {
+    this.chatService.messages.subscribe(data => {
       this.messages.push(data);
     });
 
-    this.messages.push(new TextMessage('Quexten', 'Neo', new Date().getTime(), 'Hello'));
-    this.messages.push(new TextMessage('Quexten', 'Neo', new Date().getTime(), 'What\'s up?'));
-    this.messages.push(new TextMessage('Neo', 'Quexten', new Date().getTime(), 'Do you want to enter the matrix?'));
-    this.messages.push(new TextMessage('Quexten', 'Neo', new Date().getTime(), 'Yes.'));
-    this.messages.push(new TextMessage('Neo', 'Quexten', new Date().getTime(), 'You are the matrix!'));
-    this.messages.push(new OfferMessage('Neo', 'Quexten', new Date().getTime(),
-                        new Offer('Entering the Matrix', '01/01/1970', '00:00', '23:59', 'Carl Aachen', '420')));
-    this.messages.push(new TextMessage('Quexten', 'Neo', new Date().getTime(), 'Won\'t work for me.'));
-    this.messages.push(new TextMessage('Neo', 'Quexten', new Date().getTime(), 'Pick another date!'));
-    this.messages.push(new OfferMessage('Quexten', 'Neo', new Date().getTime(),
-                        new Offer('Exiting the Matrix', '01/02/1270', '04:00', '21:59', 'Carl Aachen', '39')));
+    this.authenticationService.userId.subscribe(id => {
+      this.userId = id
+    })
   }
 
   ngOnInit() {
     this.writeGroup = new FormGroup({
       message: new FormControl('', Validators.required)
     });
+
+    this._route.paramMap.subscribe((params: ParamMap) => {
+      this.receiverId = params.get("id")
+    })
   }
 
   ngAfterViewInit() {
@@ -53,10 +52,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
     } catch (err) {
       console.error(err);
     }
-}
+  }
 
   async onSubmit() {
-    this.chatService.send(new TextMessage(this.userId, '', new Date().getTime(), this.writeGroup.controls.message.value));
+    this.chatService.send(new TextMessage(this.userId, this.receiverId, new Date().getTime(), this.writeGroup.controls.message.value));
     this.writeGroup.controls.message.setValue('');
   }
 

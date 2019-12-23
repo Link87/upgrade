@@ -17,6 +17,7 @@
   "author": "group16",
   "license": "Apache-2.0",
   "dependencies": {
+    "@types/uuid": "^3.4.6",
     "bcrypt": "^3.0.7",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.12",
