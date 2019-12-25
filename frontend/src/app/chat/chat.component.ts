@@ -21,14 +21,14 @@ export class ChatComponent implements OnInit, AfterViewInit {
   userId = '';
   receiverId = '';
 
-  constructor(private chatService: ChatService, private authenticationService: AuthenticationService, private _route: ActivatedRoute) {
+  constructor(private chatService: ChatService, private authenticationService: AuthenticationService, private route: ActivatedRoute) {
     this.chatService.messages.subscribe(data => {
       this.messages.push(data);
     });
 
     this.authenticationService.userId.subscribe(id => {
-      this.userId = id
-    })
+      this.userId = id;
+    });
   }
 
   ngOnInit() {
@@ -36,9 +36,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
       message: new FormControl('', Validators.required)
     });
 
-    this._route.paramMap.subscribe((params: ParamMap) => {
-      this.receiverId = params.get("id")
-    })
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.receiverId = params.get('id');
+    });
   }
 
   ngAfterViewInit() {

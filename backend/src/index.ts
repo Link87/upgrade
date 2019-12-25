@@ -4,7 +4,7 @@ import LoginGateway from './api/LoginGateway';
 import RestGateway from './api/RestGateway';
 
 import { MockDatabaseAdapter } from './adapters/MockDatabaseAdapter';
-//import { MongoDBAdapter } from './adapters/MongoDBAdapter';
+// import { MongoDBAdapter } from './adapters/MongoDBAdapter';
 import { AuthenticationService } from './services/AuthenticationService';
 import { ProfileService } from './services/ProfileService';
 import { UserService } from './services/UserService';

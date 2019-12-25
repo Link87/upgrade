@@ -43,11 +43,11 @@ export class NavbarComponent implements OnInit {
   }
 
   login1() {
-    this.authenticationService.login("test1", "123")
+    this.authenticationService.login('test1', '123');
   }
 
   login2() {
-    this.authenticationService.login("test2", "123")
+    this.authenticationService.login('test2', '123');
   }
 
 }

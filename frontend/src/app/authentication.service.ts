@@ -16,7 +16,7 @@ export class AuthenticationService {
   }
 
   public async login(username: string, password: string): Promise<string> {
-    const response = await this.http.post<{ token: string }>('http://localhost:3000/auth/login', {
+    const response = await this.http.post<{ token: string }>(`http://${window.location.hostname}:3000/auth/login`, {
       username,
       password
     }).toPromise();
@@ -28,7 +28,7 @@ export class AuthenticationService {
   }
 
   public async create(username: string, password: string): Promise<string> {
-    const response = await this.http.post<{ token: string }>('http://localhost:3000/auth/create', {
+    const response = await this.http.post<{ token: string }>(`http://${window.location.hostname}:3000/auth/create`, {
       username,
       password
     }).toPromise();
@@ -45,9 +45,9 @@ export class AuthenticationService {
 
   public get userId(): Observable<string> {
     return this._token.pipe(map(token => {
-      const decode: any =  jwt_decode(token)
-      return decode.userId
-    }))
+      const decode: any =  jwt_decode(token);
+      return decode.userId;
+    }));
   }
 
 }

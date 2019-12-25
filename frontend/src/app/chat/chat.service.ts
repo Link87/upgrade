@@ -6,23 +6,23 @@ import { AuthenticationService } from '../authentication.service';
 
 @Injectable({
   providedIn: 'root'
-})  
+})
 export class ChatService {
 
   private socket: SocketIOClient.Socket;
-  private messageObservable: Subject<ChatMessage> = new Subject<ChatMessage>()
+  private messageObservable: Subject<ChatMessage> = new Subject<ChatMessage>();
 
   constructor(private authenticationService: AuthenticationService) {
     authenticationService.token.subscribe(token => {
-      this.socket = io('http://localhost:3000?token=' + token);
-      this.socket.on('text-message', (message: TextMessage) => {
-        this.messageObservable.next(message)
-      })
-    })
+      this.socket = io(`http://${window.location.hostname}:3000?token=${token}`);
+      this.socket.on('text_message', (message: TextMessage) => {
+        this.messageObservable.next(message);
+      });
+    });
   }
 
   public send(message: TextMessage) {
-    this.socket.emit('text-message', message);
+    this.socket.emit('text_message', message);
   }
 
   get messages(): Observable<ChatMessage> {

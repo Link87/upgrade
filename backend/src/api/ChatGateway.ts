@@ -1,21 +1,21 @@
 import { Server } from 'http';
 import * as socketio from 'socket.io';
+import * as uuid from 'uuid/v4';
 
+import { ChatMessage } from '../models/ChatMessage';
 import { User } from '../models/User';
 import { AuthenticationService } from '../services/AuthenticationService';
-import { ChatMessage } from '../models/ChatMessage';
-import uuid = require('uuid/v4');
 
 export class ChatGateway {
 
-    private sockets = new Map<string, IExtendedSocket>()
+    private sockets = new Map<string, IExtendedSocket>();
 
     constructor(private authentication: AuthenticationService) {}
 
     public listen(server: Server) {
         const io = socketio.listen(server);
         io.origins('*:*');
-        console.log(this.authentication)
+        console.log(this.authentication);
         io.use(async (socket, next) => {
             if (socket.handshake.query && socket.handshake.query.token) {
                 const result = await this.authentication.authenticateToken(socket.handshake.query.token);
@@ -28,24 +28,24 @@ export class ChatGateway {
             } else {
                 next(new Error('Authentication error: token not found'));
             }
-        })
+        });
 
         io.on('connection', (socket: IExtendedSocket) => {
-            console.log(`Socket connection from ${socket.user.id}`)
-            this.sockets.set(socket.user.id, socket)
+            console.log(`Socket connection from ${socket.user.id}`);
+            this.sockets.set(socket.user.id, socket);
 
-            socket.on("text-message", (message: ChatMessage) => {
+            socket.on('text_message', (message: ChatMessage) => {
                 if (message.senderId !== socket.user.id) {
-                    console.log("incorrect sender id detected")
-                    return
+                    console.error('incorrect sender id detected');
+                    return;
                 }
 
                 message.messageId = uuid();
-                socket.emit("text-message", message)
+                socket.emit('text_message', message);
                 if (this.sockets.has(message.receiverId)) {
-                    this.sockets.get(message.receiverId)?.emit("text-message", message)
+                    this.sockets.get(message.receiverId)?.emit('text_message', message);
                 }
-            })       
+            });
         });
 
         return io;
