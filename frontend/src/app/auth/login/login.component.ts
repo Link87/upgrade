@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,18 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+  private redirect: string;
+
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    this.route.queryParams
+      .subscribe(params => this.redirect = params.redirect || '/');
   }
 
 
@@ -25,7 +31,10 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls.email.value,
       this.loginForm.controls.password.value)
     .subscribe(
-      user => console.log(user),
+      user => {
+        console.log(user);
+        this.router.navigateByUrl(this.redirect);
+      },
       error => console.error(error)
     );
   }
