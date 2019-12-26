@@ -17,9 +17,9 @@
     <button class="btn navbar-btn btn-outline-primary ml-2" (click)="login2()">Login2</button>
 
 
-    <button class="btn navbar-btn btn-outline-primary ml-2" routerLink="/login">Anmelden</button>
-    <button class="btn navbar-btn btn-primary ml-2" routerLink="/register">Registrieren</button>
-    <button class="btn navbar-btn btn-outline-primary ml-2" [hidden]="true">Abmelden</button>
+    <button class="btn navbar-btn btn-outline-primary ml-2" routerLink="/login" [hidden]="authenticator.isAuthenticated()">Anmelden</button>
+    <button class="btn navbar-btn btn-primary ml-2" routerLink="/register" [hidden]="authenticator.isAuthenticated()">Registrieren</button>
+    <button class="btn navbar-btn btn-outline-primary ml-2" (click)="logout()" [hidden]="!authenticator.isAuthenticated()">Abmelden</button>
   </div>
 
   <button class="navbar-toggler ml-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -11,7 +11,7 @@ export class RegisterComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private loginService: AuthenticationService) { }
+  constructor(private formBuilder: FormBuilder, private authenticator: AuthenticationService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -28,14 +28,14 @@ export class RegisterComponent implements OnInit {
 
 
   async onSubmit() {
-    try {
-      const token = await this.loginService.create(this.loginForm.controls.email.value,
-                            this.loginForm.controls.password.value);
-      // TODO got token, should set profile data with a second request
-      console.log(token);
-    } catch (error) {
-      console.log(error);
-    }
+    // TODO got token, should set profile data with a second request
+    this.authenticator.create(
+      this.loginForm.controls.email.value,
+      this.loginForm.controls.password.value)
+    .subscribe(
+      user => console.log(user),
+      error => console.error(error)
+    );
   }
 
 

@@ -13,8 +13,7 @@ export class NavbarComponent implements OnInit {
   visible = true;
   @Output() paddingUpdate = new EventEmitter<boolean>();
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authenticationService: AuthenticationService) {
-  }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authenticator: AuthenticationService) {}
 
   ngOnInit() {
     this.router.events.pipe(
@@ -43,11 +42,15 @@ export class NavbarComponent implements OnInit {
   }
 
   login1() {
-    this.authenticationService.login('test1', '123');
+    this.authenticator.login('test1', '123').subscribe();
   }
 
   login2() {
-    this.authenticationService.login('test2', '123');
+    this.authenticator.login('test2', '123').subscribe();
+  }
+
+  logout() {
+    this.authenticator.logout();
   }
 
 }

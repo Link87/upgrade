@@ -10,7 +10,7 @@ import { AuthenticationService } from '../authentication.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private loginService: AuthenticationService) { }
+  constructor(private formBuilder: FormBuilder, private authenticator: AuthenticationService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -21,14 +21,13 @@ export class LoginComponent implements OnInit {
 
 
   async onSubmit() {
-    try {
-      const token = await this.loginService.login(this.loginForm.controls.email.value,
-                            this.loginForm.controls.password.value);
-      console.log(token);
-    } catch (error) {
-      console.log(error);
-    }
+    this.authenticator.login(
+      this.loginForm.controls.email.value,
+      this.loginForm.controls.password.value)
+    .subscribe(
+      user => console.log(user),
+      error => console.error(error)
+    );
   }
-
 
 }

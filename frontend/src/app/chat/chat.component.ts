@@ -21,13 +21,14 @@ export class ChatComponent implements OnInit, AfterViewInit {
   userId = '';
   receiverId = '';
 
-  constructor(private chatService: ChatService, private authenticationService: AuthenticationService, private route: ActivatedRoute) {
+  constructor(private chatService: ChatService, private authenticator: AuthenticationService, private route: ActivatedRoute) {
     this.chatService.messages.subscribe(data => {
       this.messages.push(data);
     });
 
-    this.authenticationService.userId.subscribe(id => {
-      this.userId = id;
+    // TODO delete dis (user will not be on this page when user change happens)
+    this.authenticator.getObserver().subscribe(user => {
+      this.userId = user.userId;
     });
   }
 

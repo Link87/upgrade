@@ -12,9 +12,13 @@ export class AuthenticationService {
     }
 
     public async authenticateToken(token: string): Promise<User | null> {
-        const payload: any = verify(token, this.jwtSecret);
-        const userId = payload.userId.toString();
-        return this.userService.getUserById(userId);
+        try {
+            const payload: any = verify(token, this.jwtSecret);
+            const userId = payload.userId.toString();
+            return this.userService.getUserById(userId);
+        } catch {
+            return null;
+        }
     }
 
     public async createToken(id: string): Promise<string> {
