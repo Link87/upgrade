@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, QueryList, 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatMessage, OfferMessage, TextMessage, Offer  } from '../models/chat.models';
 import { ChatService } from './chat.service';
-import { AuthenticationService } from '../authentication.service';
+import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   userId = '';
   receiverId = '';
 
-  constructor(private chatService: ChatService, private authenticator: AuthenticationService, private route: ActivatedRoute) {
+  constructor(private chatService: ChatService, private authenticator: AuthService, private route: ActivatedRoute) {
     this.chatService.messages.subscribe(data => {
       this.messages.push(data);
     });

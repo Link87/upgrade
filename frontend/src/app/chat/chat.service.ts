@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { ChatMessage, TextMessage } from '../models/chat.models';
-import { AuthenticationService } from '../authentication.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +14,12 @@ export class ChatService implements OnDestroy {
 
   private messages$: Subject<ChatMessage> = new Subject<ChatMessage>();
 
-  constructor(authenticationService: AuthenticationService) {
-    if (authenticationService.isAuthenticated()) {
-      this.connect(authenticationService.token);
+  constructor(authService: AuthService) {
+    if (authService.isAuthenticated()) {
+      this.connect(authService.token);
     }
-    this.subscription = authenticationService.getObserver().subscribe(user => {
-      if (authenticationService.isAuthenticated()) {
+    this.subscription = authService.getObserver().subscribe(user => {
+      if (authService.isAuthenticated()) {
         this.connect(user.token);
       }
     });

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../authentication.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +11,7 @@ export class RegisterComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authenticator: AuthenticationService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   async onSubmit() {
     // TODO got token, should set profile data with a second request
-    this.authenticator.create(
+    this.authService.create(
       this.loginForm.controls.email.value,
       this.loginForm.controls.password.value)
     .subscribe(

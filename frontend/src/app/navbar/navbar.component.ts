@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { AuthenticationService } from '../authentication.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
   visible = true;
   @Output() paddingUpdate = new EventEmitter<boolean>();
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authenticator: AuthenticationService) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
     this.router.events.pipe(
@@ -42,15 +42,15 @@ export class NavbarComponent implements OnInit {
   }
 
   login1() {
-    this.authenticator.login('test1', '123').subscribe();
+    this.authService.login('test1', '123').subscribe();
   }
 
   login2() {
-    this.authenticator.login('test2', '123').subscribe();
+    this.authService.login('test2', '123').subscribe();
   }
 
   logout() {
-    this.authenticator.logout();
+    this.authService.logout();
   }
 
 }
