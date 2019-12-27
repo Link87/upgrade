@@ -1,1 +1,7 @@
-@import '../auth.component.scss'
+@import '../auth.component.scss';
+
+.form-control.is-valid:focus, .was-validated :valid.form-control {
+  border-color:inherit !important;
+  background-image: inherit !important;
+  box-shadow:inherit !important;
+}

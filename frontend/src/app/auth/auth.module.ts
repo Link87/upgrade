@@ -17,7 +17,6 @@ import { LogoutComponent } from './logout/logout.component';
     LogoutComponent
   ],
   imports: [
-    FormsModule,
     ReactiveFormsModule,
     CommonModule,
     AuthRoutingModule
