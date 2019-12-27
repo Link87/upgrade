@@ -7,10 +7,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HomeComponent } from './home/home.component';
 import { ChatComponent } from './chat/chat.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AuthComponent } from './auth/auth.component';
+import { AuthRoutingModule } from './auth/auth-routing.module';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent, data: { navbar: false }},
-  { path: 'register', component: RegisterComponent, data: { navbar: false }},
   { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
@@ -23,8 +23,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    AuthRoutingModule,
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
