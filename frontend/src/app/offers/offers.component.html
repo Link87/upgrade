@@ -1,0 +1,15 @@
+<div class="container-fluid mt-5" *ngFor="let offer of offerService.getOffers()">
+    <div class="container my-article mb-5">
+        <h2 class="my-title">{{offer.name}}</h2>
+        <div class="row my-article-row">
+            <div class="col-12 col-md-4">Fach: Mathematische Logik</div>
+            <div class="col-12 col-md-4">Bezahlung: 15€/h</div>
+            <div class="col-12 col-md-4">Klasse: Student</div>
+        </div>
+        <h3>Beschreibung</h3>
+        <p>Der Prof ist mega doof und das ist auf gar keinen Fall meine Schuld. Weil ich habe mir beim Abschreiben der
+            Hausaufgaben immer sehr viel Mühe gegeben und den ersten Klausurversuch trotzdem nicht bestanden.
+            asdhgiaushdioa. Helft mir bitte ich will meinen Bachelor.</p>
+        <button type="button" class="btn btn-outline-primary my-2 my-sm-0">Profil ansehen</button>
+    </div>
+</div>

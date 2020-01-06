@@ -14,6 +14,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './chat/chat.component';
 import { AuthModule } from './auth/auth.module';
+import { OffersComponent } from './offers/offers.component';
+import { OffersModule } from './offers/offers.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { AuthModule } from './auth/auth.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule,
+    OffersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
