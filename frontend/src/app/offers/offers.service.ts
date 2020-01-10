@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Offer } from './offer';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OffersService {
+  offers: Offer[] = [];
 
-  constructor() { }
+  constructor(private http: HttpClient) {
+    this.getOffers();
+  }
 
-  getOffers(){
-    return [new Offer("MaLo ist viel zu schwer!","MaLo",420,"Student","MaLo Der Prof ist mega doof und das ist auf gar keinen Fall meine Schuld. Weil ich habe mir beim Abschreiben der Hausaufgaben immer sehr viel Mühe gegeben und den ersten Klausurversuch trotzdem nicht bestanden. asdhgiaushdioa. Helft mir bitte ich will meinen Bachelor.")]
+  getOffers() {
+    this.http.get<Offer[]>("http://localhost:3000/api/v1/offers").subscribe(offers => {
+      this.offers.push(...offers);
+    });
   }
 }

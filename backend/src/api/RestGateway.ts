@@ -1,6 +1,7 @@
 import * as express from 'express';
-import { ProfileService } from '../services/ProfileService';
+import offers from './rest/offers';
 import profile from './rest/profile';
+import { ProfileService } from '../services/ProfileService';
 
 export class RestGateway {
 
@@ -14,7 +15,7 @@ export class RestGateway {
         this.router.use('/v1', api);
 
         api.use('/profile', profile(profileService));
-
+        api.use('/offers', offers());
         // endpoint invalid (=> 404 not found)
         api.use(async (
             _req: express.Request,
