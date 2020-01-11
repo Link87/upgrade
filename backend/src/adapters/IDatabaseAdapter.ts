@@ -1,4 +1,5 @@
 import { ChatMessage } from '../models/ChatMessage';
+import { Offer } from '../models/offer';
 import { User } from '../models/User';
 
 export interface IDatabaseAdapter {
@@ -21,4 +22,13 @@ export interface IDatabaseAdapter {
 
     subscribeToChatsForUser(userId: string, onMessage: (message: ChatMessage) => void): void;
 
+    getOffers(): Promise<Offer[]>;
+
+    getOffer(id: string): Promise<Offer | null>;
+
+    deleteOffer(id: string): Promise<void>;
+
+    updateOffer(offer: Offer): Promise<void>;
+
+    createOffer(offer: Offer): Promise<void>;
 }

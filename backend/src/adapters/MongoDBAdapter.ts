@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb';
 
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
 import { ChatMessage } from '../models/ChatMessage';
+import { Offer } from '../models/offer';
 import { User } from '../models/User';
 
 export class MongoDBAdapter implements IDatabaseAdapter {
@@ -61,6 +62,26 @@ export class MongoDBAdapter implements IDatabaseAdapter {
 
     public async subscribeToChatsForUser(_userId: string, _onMessage: (message: ChatMessage) => void): Promise<void> {
        return;
+    }
+
+    public async getOffers(): Promise<Offer[]> {
+        return [];
+    }
+
+    public async getOffer(_id: string): Promise<Offer | null> {
+        return null;
+    }
+
+    public async deleteOffer(_id: string) {
+        return;
+    }
+
+    public async updateOffer(_offer: Offer) {
+        return;
+    }
+
+    public async createOffer(_offer: Offer) {
+        return;
     }
 
 }

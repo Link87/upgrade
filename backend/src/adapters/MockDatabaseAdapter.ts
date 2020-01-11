@@ -1,5 +1,6 @@
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
 import { ChatMessage } from '../models/ChatMessage';
+import { Offer } from '../models/offer';
 import { User } from '../models/User';
 
 function deepCopyUser(user: User): User {
@@ -13,6 +14,7 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
     private chats: Map<string, Map<string, ChatMessage[]>> = new Map<string, Map<string, ChatMessage[]>>();
     // tslint:disable-next-line: max-line-length
     private chatListeners: Map<string, Array<(message: ChatMessage) => void>> = new Map<string, Array<(message: ChatMessage) => void>>();
+    private offers: Offer[] = [];
 
     public async getUserById(id: string): Promise<User | null> {
         const usersWithId = this.users.filter(user => user.id === id);
@@ -111,6 +113,27 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
         }
 
         this.chatListeners.get(userId)!.push(onMessage);
+    }
+
+    public async getOffers(): Promise<Offer[]> {
+        return this.offers;
+    }
+
+    public async getOffer(id: string): Promise<Offer | null> {
+        return this.offers.filter(offer => offer.id === id)[0];
+    }
+
+    public async deleteOffer(id: string) {
+        this.offers = this.offers.filter(offer => id !== offer.id);
+    }
+
+    public async updateOffer(offer: Offer) {
+        this.deleteOffer(offer.id);
+        this.createOffer(offer);
+    }
+
+    public async createOffer(offer: Offer) {
+        this.offers.push(offer);
     }
 
 }
