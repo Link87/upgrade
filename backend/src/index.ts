@@ -3,15 +3,16 @@ import HttpGateway from './api/HttpGateway';
 import LoginGateway from './api/LoginGateway';
 import RestGateway from './api/RestGateway';
 
-import { MockDatabaseAdapter } from './adapters/MockDatabaseAdapter';
-// import { MongoDBAdapter } from './adapters/MongoDBAdapter';
+// import { MockDatabaseAdapter } from './adapters/MockDatabaseAdapter';
+import { MongoDBAdapter } from './adapters/MongoDBAdapter';
 import { AuthenticationService } from './services/AuthenticationService';
 import { OfferService } from './services/OfferService';
 import { ProfileService } from './services/ProfileService';
 import { UserService } from './services/UserService';
 
 async function main() {
-    const database = new MockDatabaseAdapter();
+    const database: MongoDBAdapter = new MongoDBAdapter();
+    await database.connect();
 
     const userService = new UserService(database);
     const profileService = new ProfileService(userService);
