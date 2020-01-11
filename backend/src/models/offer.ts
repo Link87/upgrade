@@ -4,6 +4,7 @@ export class Offer {
                 public readonly loan: number,
                 public readonly type: string,
                 public readonly description: string,
+                public owner: string,
                 public id: string) {
     }
 }

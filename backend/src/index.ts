@@ -22,7 +22,7 @@ async function main() {
     authenticationService.createUserByLoginData('test2', '123');
 
     const loginGateway = new LoginGateway(authenticationService);
-    const restGateway = new RestGateway(profileService, offerService);
+    const restGateway = new RestGateway(profileService, offerService, authenticationService);
     const httpGateway = new HttpGateway(restGateway, loginGateway);
     const server = await httpGateway.listen(3000);
     new ChatGateway(authenticationService).listen(server);

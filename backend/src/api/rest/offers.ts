@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { Offer } from '../../models/offer';
+import { User } from '../../models/User';
 import { OfferService } from '../../services/OfferService';
 
 class OfferRoute {
@@ -19,8 +20,15 @@ class OfferRoute {
             req: express.Request,
             res: express.Response) => {
                 const offer: Offer = req.body;
-                const id = await offerService.createOffer(offer);
 
+                const user: User | null = (req as any).user;
+                if (user === null) {
+                    res.status(400).send('error');
+                    return;
+                }
+                offer.owner = user?.id!;
+
+                const id = await offerService.createOffer(offer);
                 res.status(200).contentType('application/json').send({
                     id,
                     status: 'ok',
@@ -31,6 +39,13 @@ class OfferRoute {
             req: express.Request,
             res: express.Response) => {
                 const id = req.params.id;
+
+                const offer = await offerService.getOffer(id);
+                const user: User | null = (req as any).user;
+                if (!(user?.id === offer?.owner)) {
+                    res.status(400).send('error');
+                    return;
+                }
 
                 await offerService.deleteOffer(id);
                 res.status(200).contentType('application/json').send({
@@ -52,6 +67,13 @@ class OfferRoute {
             res: express.Response) => {
                 const id = req.params.id;
                 const newOffer = req.body;
+
+                const oldOffer = await offerService.getOffer(id);
+                const user: User | null = (req as any).user;
+                if (!(user?.id === oldOffer?.owner)) {
+                    res.status(400).send('error');
+                    return;
+                }
 
                 if (id !== newOffer.id) {
                     res.status(400).contentType('application/json').send({

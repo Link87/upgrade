@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { AuthenticationService } from '../services/AuthenticationService';
 import { OfferService } from '../services/OfferService';
 import { ProfileService } from '../services/ProfileService';
 import offers from './rest/offers';
@@ -8,12 +9,27 @@ export class RestGateway {
 
     private readonly router: express.Router;
 
-    constructor(profileService: ProfileService, offerService: OfferService) {
+    constructor(profileService: ProfileService,
+                offerService: OfferService,
+                authenticationService: AuthenticationService) {
         this.router = express.Router();
 
         // create middleware for v1 api version
         const api = express.Router({ mergeParams: true });
         this.router.use('/v1', api);
+
+        api.use(async (
+            req: express.Request,
+            _res: express.Response,
+            next: express.NextFunction,
+        ) => {
+            const token: string = req.headers.token?.toString()!;
+            const user = await authenticationService.authenticateToken(token);
+            const anyRequest: any = req;
+            anyRequest.user = user;
+
+            next();
+        });
 
         api.use('/profile', profile(profileService));
         api.use('/offers', offers(offerService));
