@@ -1,10 +1,11 @@
 export class ChatMessage {
 
-    constructor(public readonly senderId: string,
-                public readonly receiverId: string,
+    constructor(public readonly messageId: string,
+                public readonly chatId: string,
+                public readonly from1to2: boolean,
                 public readonly time: number,
                 public readonly messageType: string,
-                public messageId: string) {
+                ) {
     }
 
 }

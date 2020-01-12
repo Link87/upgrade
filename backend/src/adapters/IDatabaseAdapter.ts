@@ -1,3 +1,4 @@
+import { Chat } from '../models/Chat';
 import { ChatMessage } from '../models/ChatMessage';
 import { User } from '../models/User';
 
@@ -13,12 +14,14 @@ export interface IDatabaseAdapter {
 
     deleteUser(id: string): Promise<void>;
 
-    getChatsForUser(userId: string): Promise<string[]>;
+    createChat(chat: Chat): Promise<void>;
 
-    getChatMessagesForChat(fistUserId: string, secondUserId: string): Promise<ChatMessage[]>;
+    getChatById(chatId: string): Promise<Chat | undefined>;
 
-    appendChatMessageToChat(firstUserId: string, secondUserid: string, message: ChatMessage): Promise<void>;
+    getChatsForUser(userId: string): Promise<Chat[]>;
 
-    subscribeToChatsForUser(userId: string, onMessage: (message: ChatMessage) => void): void;
+    getChatMessagesForChat(chatId: string): Promise<ChatMessage[]>;
+
+    appendChatMessage(message: ChatMessage): Promise<void>;
 
 }

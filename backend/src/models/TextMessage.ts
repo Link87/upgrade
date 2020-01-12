@@ -2,12 +2,13 @@ import { ChatMessage } from './ChatMessage';
 
 export class TextMessage extends ChatMessage {
 
-    constructor(public readonly senderId: string,
-                public readonly receiverId: string,
-                public readonly time: number,
+    constructor(messageId: string,
+                chatId: string,
+                from1to2: boolean,
+                time: number,
                 public readonly text: string,
-                public messageId: string) {
-        super(senderId, receiverId, time, 'text', messageId);
+                ) {
+        super(messageId, chatId, from1to2, time, 'text' );
     }
 
 }

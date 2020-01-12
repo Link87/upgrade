@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ChatMessage, OfferMessage, TextMessage, Offer  } from '../models/chat.models';
+import { ChatMessage, OfferMessage, TextMessage, Offer, TransportTextMessage  } from '../models/chat.models';
 import { ChatService } from './chat.service';
 import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -18,8 +18,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
   @ViewChildren('messages') private messagesInDom: QueryList<any>;
 
   messages: ChatMessage[] = [];
-  userId = '';
-  receiverId = '';
+  private userId = '';
+  private chatId = '';
 
   constructor(private chatService: ChatService, private authenticator: AuthService, private route: ActivatedRoute) {
     this.chatService.messages.subscribe(data => {
@@ -38,7 +38,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     });
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.receiverId = params.get('id');
+      this.chatId = params.get('id');
     });
   }
 
@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   async onSubmit() {
-    this.chatService.send(new TextMessage(this.userId, this.receiverId, new Date().getTime(), this.writeGroup.controls.message.value));
+    this.chatService.send(new TransportTextMessage(this.chatId, this.writeGroup.controls.message.value));
     this.writeGroup.controls.message.setValue('');
   }
 

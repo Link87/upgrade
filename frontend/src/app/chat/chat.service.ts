@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { ChatMessage, TextMessage } from '../models/chat.models';
+import { ChatMessage, TextMessage, TransportTextMessage } from '../models/chat.models';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -32,7 +32,7 @@ export class ChatService implements OnDestroy {
     });
   }
 
-  public send(message: TextMessage) {
+  public send(message: TransportTextMessage) {
     this.socket.emit('text_message', message);
   }
 

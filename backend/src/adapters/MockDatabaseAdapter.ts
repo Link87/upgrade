@@ -1,4 +1,5 @@
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
+import { Chat } from '../models/Chat';
 import { ChatMessage } from '../models/ChatMessage';
 import { User } from '../models/User';
 
@@ -10,9 +11,8 @@ function deepCopyUser(user: User): User {
 export class MockDatabaseAdapter implements IDatabaseAdapter {
 
     private users: User[] = [];
-    private chats: Map<string, Map<string, ChatMessage[]>> = new Map<string, Map<string, ChatMessage[]>>();
-    // tslint:disable-next-line: max-line-length
-    private chatListeners: Map<string, Array<(message: ChatMessage) => void>> = new Map<string, Array<(message: ChatMessage) => void>>();
+    private chats: Chat[] = [];
+    private chatMessages: ChatMessage[] = [];
 
     public async getUserById(id: string): Promise<User | null> {
         const usersWithId = this.users.filter(user => user.id === id);
@@ -53,64 +53,26 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
         return;
     }
 
-    public async getChatsForUser(userId: string): Promise<string[]> {
-        if (!this.chats.has(userId)) {
-            this.chats.set(userId, new Map<string, ChatMessage[]>());
+    public async createChat(chat: Chat): Promise<void> {
+        if (this.chats.find(c => c.chatId === chat.chatId) === undefined) {
+            this.chats.push(chat);
         }
-
-        return Array.from(this.chats.get(userId)!.keys());
     }
 
-    public async getChatMessagesForChat(firstUserId: string, secondUserId: string): Promise<ChatMessage[]> {
-        if (!this.chats.has(firstUserId)) {
-            this.chats.set(firstUserId, new Map<string, ChatMessage[]>());
-            if (!this.chats.get(firstUserId)!.has(secondUserId)) {
-                this.chats.get(firstUserId)!.set(secondUserId, []);
-            }
-        }
-        if (!this.chats.has(secondUserId)) {
-            this.chats.set(secondUserId, new Map<string, ChatMessage[]>());
-            if (!this.chats.get(secondUserId)!.has(firstUserId)) {
-                this.chats.get(secondUserId)!.set(firstUserId, []);
-            }
-        }
-
-        return this.chats.get(firstUserId)!.get(secondUserId)!;
+    public async getChatById(chatId: string): Promise<Chat | undefined> {
+        return this.chats.find(chat => chat.chatId === chatId);
     }
 
-    public async appendChatMessageToChat(firstUserId: string,
-                                         secondUserId: string,
-                                         message: ChatMessage): Promise<void> {
-        if (!this.chats.has(firstUserId)) {
-            this.chats.set(firstUserId, new Map<string, ChatMessage[]>());
-            if (!this.chats.get(firstUserId)!.has(secondUserId)) {
-                this.chats.get(firstUserId)!.set(secondUserId, []);
-            }
-        }
-        if (!this.chats.has(secondUserId)) {
-            this.chats.set(secondUserId, new Map<string, ChatMessage[]>());
-            if (!this.chats.get(secondUserId)!.has(firstUserId)) {
-                this.chats.get(secondUserId)!.set(firstUserId, []);
-            }
-        }
-
-        this.chats.get(firstUserId)!
-            .get(secondUserId)!
-            .push(message);
-        this.chats.get(secondUserId)!
-            .get(firstUserId)!
-            .push(message);
-
-        this.chatListeners.get(firstUserId)!.forEach(callback => callback(message));
-        this.chatListeners.get(secondUserId)!.forEach(callback => callback(message));
+    public async getChatsForUser(userId: string): Promise<Chat[]> {
+        return this.chats.filter(chat => chat.userId1 === userId || chat.userId2 === userId);
     }
 
-    public async subscribeToChatsForUser(userId: string, onMessage: (message: ChatMessage) => void): Promise<void> {
-        if (!this.chatListeners.has(userId)) {
-            this.chatListeners.set(userId, []);
-        }
+    public async getChatMessagesForChat(chatId: string): Promise<ChatMessage[]> {
+        return this.chatMessages.filter(message => message.chatId === chatId);
+    }
 
-        this.chatListeners.get(userId)!.push(onMessage);
+    public async appendChatMessage(message: ChatMessage): Promise<void> {
+        this.chatMessages.push(message);
     }
 
 }

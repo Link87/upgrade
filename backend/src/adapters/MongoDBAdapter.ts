@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
+import { Chat } from '../models/Chat';
 import { ChatMessage } from '../models/ChatMessage';
 import { User } from '../models/User';
 
@@ -45,22 +46,24 @@ export class MongoDBAdapter implements IDatabaseAdapter {
         return;
     }
 
-    public async getChatsForUser(_userId: string): Promise<string[]> {
-       return [];
-    }
-
-    public async getChatMessagesForChat(_firstUserId: string, _secondUserId: string): Promise<ChatMessage[]> {
-        return [];
-    }
-
-    public async appendChatMessageToChat(_firstUserId: string,
-                                         _secondUserId: string,
-                                         _message: ChatMessage): Promise<void> {
+    public async createChat(_chat: Chat): Promise<void> {
         return;
     }
 
-    public async subscribeToChatsForUser(_userId: string, _onMessage: (message: ChatMessage) => void): Promise<void> {
-       return;
+    public async getChatById(_chatId: string): Promise<Chat> {
+        return null!;
+    }
+
+    public async getChatsForUser(_userId: string): Promise<Chat[]> {
+       return [];
+    }
+
+    public async getChatMessagesForChat(_chatId: string): Promise<ChatMessage[]> {
+        return [];
+    }
+
+    public async appendChatMessage(_message: ChatMessage): Promise<void> {
+        return;
     }
 
 }
