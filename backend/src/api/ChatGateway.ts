@@ -22,7 +22,7 @@ export class ChatGateway {
         io.use(async (socket, next) => {
             if (socket.handshake.query && socket.handshake.query.token) {
                 const result = await this.authentication.authenticateToken(socket.handshake.query.token);
-                if (result == null) {
+                if (result === undefined) {
                     return next(new Error('Authentication error: token invalid'));
                 }
                 const extSocket = socket as IExtendedSocket;
@@ -42,12 +42,10 @@ export class ChatGateway {
                 const chat: Chat | undefined = await this.chatService.getChatById(transportMsg.chatId);
                 if (chat === undefined) {
                     console.error(`Invalid chat id: ${transportMsg.chatId}`);
-                    socket.emit('error', 'Invalid chat id');
                     return;
                 }
                 if (socket.user.id !== chat.userId1 && socket.user.id !== chat.userId2) {
                     console.error('Authorization error: message from chat-foreign user');
-                    socket.emit('error', 'Authorization error');
                     return;
                 }
                 const senderId: string = socket.user.id === chat.userId1 ? chat.userId1 : chat.userId2;

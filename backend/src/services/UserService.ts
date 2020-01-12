@@ -13,11 +13,11 @@ export class UserService {
         return this.database.createUser(user);
     }
 
-    public async getUserByUsername(username: string): Promise<User | null> {
+    public async getUserByUsername(username: string): Promise<User | undefined> {
         return this.database.getUserByUsername(username);
     }
 
-    public async getUserById(id: string): Promise<User | null> {
+    public async getUserById(id: string): Promise<User | undefined> {
         return this.database.getUserById(id);
     }
 

@@ -23,9 +23,10 @@ async function main() {
     const authenticationService = new AuthenticationService(userService, 'hunter22');
     authenticationService.createUserByLoginData('test1', '123');
     authenticationService.createUserByLoginData('test2', '123');
+    authenticationService.createUserByLoginData('test3', '123');
 
     const loginGateway = new LoginGateway(authenticationService);
-    const restGateway = new RestGateway(profileService, chatService);
+    const restGateway = new RestGateway(profileService, chatService, userService, authenticationService);
     const httpGateway = new HttpGateway(restGateway, loginGateway);
     const server = await httpGateway.listen(3000);
     new ChatGateway(authenticationService, chatService).listen(server);

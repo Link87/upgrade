@@ -6,13 +6,13 @@ export class ProfileService {
     constructor (private userService: UserService) {
     }
 
-    public async getProfile(id: string): Promise<Profile | null> {
+    public async getProfile(id: string): Promise<Profile | undefined> {
         const user = (await this.userService.getUserById(id));
 
-        if (user !== null) {
+        if (user !== undefined) {
             return user.profile;
         } else {
-            return null;
+            return undefined;
         }
     }
 

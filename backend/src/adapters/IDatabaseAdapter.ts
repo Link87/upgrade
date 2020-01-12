@@ -4,9 +4,9 @@ import { User } from '../models/User';
 
 export interface IDatabaseAdapter {
 
-    getUserById(id: string): Promise<User | null>;
+    getUserById(id: string): Promise<User | undefined>;
 
-    getUserByUsername(id: string): Promise<User | null>;
+    getUserByUsername(id: string): Promise<User | undefined>;
 
     createUser(user: User): Promise<User>;
 
@@ -14,13 +14,15 @@ export interface IDatabaseAdapter {
 
     deleteUser(id: string): Promise<void>;
 
-    createChat(chat: Chat): Promise<void>;
+    createChat(chat: Chat): Promise<Chat>;
+
+    deleteChat(chat: Chat): Promise<void>;
 
     getChatById(chatId: string): Promise<Chat | undefined>;
 
     getChatsForUser(userId: string): Promise<Chat[]>;
 
-    getChatMessagesForChat(chatId: string): Promise<ChatMessage[]>;
+    getChatMessagesForChat(chatId: string): Promise<ChatMessage[] | undefined>;
 
     appendChatMessage(message: ChatMessage): Promise<void>;
 

@@ -11,13 +11,13 @@ export class AuthenticationService {
     constructor (private userService: UserService, private jwtSecret: string) {
     }
 
-    public async authenticateToken(token: string): Promise<User | null> {
+    public async authenticateToken(token: string): Promise<User | undefined> {
         try {
             const payload: any = verify(token, this.jwtSecret);
             const userId = payload.userId.toString();
             return this.userService.getUserById(userId);
         } catch {
-            return null;
+            return undefined;
         }
     }
 
@@ -28,21 +28,21 @@ export class AuthenticationService {
         return token;
     }
 
-    public async verifyLoginData(username: string, password: string): Promise<User | null> {
+    public async verifyLoginData(username: string, password: string): Promise<User | undefined> {
         const user = await this.userService.getUserByUsername(username);
 
-        if (user == null) {
-            return null;
+        if (user === undefined) {
+            return undefined;
         }
 
         const passwordMatches = await compare(password, user.loginCredentials.password);
-        return passwordMatches ? user : null;
+        return passwordMatches ? user : undefined;
     }
 
-    public async createUserByLoginData(username: string, password: string): Promise<User | null> {
+    public async createUserByLoginData(username: string, password: string): Promise<User | undefined> {
         const existingUser = await this.userService.getUserByUsername(username);
-        if (existingUser !== null) {
-            return null;
+        if (existingUser !== undefined) {
+            return undefined;
         }
 
         const salt = await genSalt(saltRounds);

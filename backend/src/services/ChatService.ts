@@ -6,8 +6,12 @@ export class ChatService {
 
     constructor (private database: IDatabaseAdapter) {}
 
-    public async createChat(chat: Chat): Promise<void> {
-        this.database.createChat(chat);
+    public async createChat(chat: Chat): Promise<Chat> {
+        return this.database.createChat(chat);
+    }
+
+    public async deleteChat(chat: Chat): Promise<void> {
+        return this.database.deleteChat(chat);
     }
 
     public async getChatById(chatId: string): Promise<Chat | undefined> {
@@ -18,7 +22,7 @@ export class ChatService {
         return this.database.getChatsForUser(userId);
     }
 
-    public async getChatMessagesForChat(chatId: string): Promise<ChatMessage[]> {
+    public async getChatMessagesForChat(chatId: string): Promise<ChatMessage[] | undefined> {
         return this.database.getChatMessagesForChat(chatId);
     }
 

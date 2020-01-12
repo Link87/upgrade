@@ -21,13 +21,14 @@ export class MongoDBAdapter implements IDatabaseAdapter {
 
     }
 
-    public async getUserById(id: string): Promise<User> {
-        const user: User = (await this.client.db(this.dbName).collection(this.collectionName).findOne({ id })) !;
+    public async getUserById(id: string): Promise<User | undefined> {
+        const user = await this.client.db(this.dbName).collection(this.collectionName).findOne({ id });
         return user;
     }
 
-    public async getUserByUsername(username: string): Promise<User | null> {
-        const user: User | null = (await this.client.db(this.dbName).collection(this.collectionName).findOne({ 'profile.name': username }));
+    public async getUserByUsername(username: string): Promise<User | undefined> {
+        const user =
+            await this.client.db(this.dbName).collection(this.collectionName).findOne({ 'profile.name': username });
         return user;
     }
 
@@ -46,7 +47,11 @@ export class MongoDBAdapter implements IDatabaseAdapter {
         return;
     }
 
-    public async createChat(_chat: Chat): Promise<void> {
+    public async createChat(_chat: Chat): Promise<Chat> {
+        return null!;
+    }
+
+    public async deleteChat(_chat: Chat): Promise<void> {
         return;
     }
 
@@ -58,7 +63,7 @@ export class MongoDBAdapter implements IDatabaseAdapter {
        return [];
     }
 
-    public async getChatMessagesForChat(_chatId: string): Promise<ChatMessage[]> {
+    public async getChatMessagesForChat(_chatId: string): Promise<ChatMessage[] | undefined> {
         return [];
     }
 
