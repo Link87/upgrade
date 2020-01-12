@@ -16,6 +16,7 @@ import { ChatComponent } from './chat/chat.component';
 import { AuthModule } from './auth/auth.module';
 import { OffersComponent } from './offers/offers.component';
 import { OffersModule } from './offers/offers.module';
+import { PetitionsModule } from './petitions/petitions.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { OffersModule } from './offers/offers.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule,
-    OffersModule
+    OffersModule,
+    PetitionsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

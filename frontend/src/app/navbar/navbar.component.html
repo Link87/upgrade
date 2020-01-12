@@ -7,14 +7,15 @@
   <div class="navbar-collapse collapse" id="navbarSupportedContent">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" routerLink="/offers">Angebote</a>
-      <a class="nav-item nav-link" href="#">Link</a>
-      <a class="nav-item nav-link" href="#">Link</a>
+      <a class="nav-item nav-link active" routerLink="/petitions">Gesuche</a>
     </div>
   </div>
 
   <div class="d-flex justify-content-end w-50 my-1">
+    <button class="btn navbar-btn btn-outline-primary ml-2">Neues Inserat erstellen</button>
     <button class="btn navbar-btn btn-outline-primary ml-2" (click)="login1()">Login1</button>
     <button class="btn navbar-btn btn-outline-primary ml-2" (click)="login2()">Login2</button>
+    <button class="btn navbar-btn btn-outline-primary ml-2">Mein Profil</button>
 
 
     <button class="btn navbar-btn btn-outline-primary ml-2" routerLink="/login" [hidden]="authService.isAuthenticated()">Anmelden</button>
