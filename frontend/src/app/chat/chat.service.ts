@@ -1,8 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { ChatMessage, TextMessage, TransportTextMessage } from '../models/chat.models';
+import { Chat, ChatMessage, TextMessage, TransportTextMessage } from '../models/chat.models';
 import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,9 @@ export class ChatService implements OnDestroy {
 
   private messages$: Subject<ChatMessage> = new Subject<ChatMessage>();
 
-  constructor(authService: AuthService) {
+  private readonly apiPath = `http://${window.location.hostname}:3000/api/v1/chat`;
+
+  constructor(private http: HttpClient, authService: AuthService) {
     if (authService.isAuthenticated()) {
       this.connect(authService.token);
     }
@@ -36,8 +39,20 @@ export class ChatService implements OnDestroy {
     this.socket.emit('text_message', message);
   }
 
-  get messages(): Observable<ChatMessage> {
+  public get messages(): Observable<ChatMessage> {
     return this.messages$;
+  }
+
+  public getChat(chatId: string): Observable<Chat> {
+    return this.http.get<Chat>(`${this.apiPath}/${chatId}`);
+  }
+
+  public getChatMessagesOfChat(chatId: string): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(`${this.apiPath}/${chatId}/messages`);
+  }
+
+  public getChatsOfUser(userId: string): Observable<Chat[]> {
+    return this.http.get<Chat[]>(`${this.apiPath}/user/${userId}`);
   }
 
   ngOnDestroy() {

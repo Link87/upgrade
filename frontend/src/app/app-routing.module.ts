@@ -11,7 +11,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 
 const appRoutes: Routes = [
-  { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
