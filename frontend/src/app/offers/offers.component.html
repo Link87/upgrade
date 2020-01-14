@@ -1,10 +1,17 @@
-<div style="float:right;">
-    <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Nach Inseraten suchen" aria-label="Search">
-        <button class="btn navbar-btn btn-outline-primary ml-2" type="submit">Suchen</button>
-    </form>
+<div class="container-fluid justify-content-center w-100 write-section mt-2">
+    <div class="write-box align-content-center h-100">
+        <form class="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="form-row justify-content-center">
+                <div class="col">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Nach Inseraten suchen"
+                        aria-label="Search"></div>
+                <div class="col-auto">
+                    <button class="btn navbar-btn btn-outline-primary ml-2" type="submit">Suchen</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-
 
 <div class="container-fluid mt-5" *ngFor="let offer of this.offerService.offers">
     <div class="container my-article mb-5">

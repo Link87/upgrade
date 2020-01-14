@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { OffersComponent } from './offers/offers.component';
 import { OffersModule } from './offers/offers.module';
 import { PetitionsModule } from './petitions/petitions.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PetitionsModule } from './petitions/petitions.module';
     AppRoutingModule,
     AuthModule,
     OffersModule,
-    PetitionsModule
+    PetitionsModule,
+    ProfileModule
   ],
   providers: [],
   bootstrap: [AppComponent]

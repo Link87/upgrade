@@ -12,13 +12,12 @@ export class MongoDBAdapter implements IDatabaseAdapter {
     private offerCollection = 'offers';
     private url = 'mongodb://localhost:27017';
 
-
-    public async connect () {
+    public async connect() {
         this.client = await MongoClient.connect(this.url);
     }
 
     public async getUserById(id: string): Promise<User> {
-        const user: User = (await this.client!.db(this.dbName).collection(this.userCollection).findOne({ id })) !;
+        const user: User = (await this.client!.db(this.dbName).collection(this.userCollection).findOne({ id }))!;
         return user;
     }
 
@@ -43,7 +42,7 @@ export class MongoDBAdapter implements IDatabaseAdapter {
     }
 
     public async getChatsForUser(_userId: string): Promise<string[]> {
-       return [];
+        return [];
     }
 
     public async getChatMessagesForChat(_firstUserId: string, _secondUserId: string): Promise<ChatMessage[]> {
@@ -57,7 +56,7 @@ export class MongoDBAdapter implements IDatabaseAdapter {
     }
 
     public async subscribeToChatsForUser(_userId: string, _onMessage: (message: ChatMessage) => void): Promise<void> {
-       return;
+        return;
     }
 
     public async getOffers(): Promise<Offer[]> {
@@ -73,7 +72,7 @@ export class MongoDBAdapter implements IDatabaseAdapter {
     }
 
     public async updateOffer(offer: Offer): Promise<void> {
-        await this.client!.db(this.dbName).collection(this.offerCollection).updateOne({id: offer.id }, offer);
+        await this.client!.db(this.dbName).collection(this.offerCollection).updateOne({ id: offer.id }, offer);
     }
 
     public async createOffer(offer: Offer): Promise<void> {

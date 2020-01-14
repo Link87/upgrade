@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OffersComponent } from './offers.component';
+import { CreateOfferComponent } from './create-offer.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CreateOfferModule } from './create-offer/create-offer.module';
+
 
 
 @NgModule({
-  declarations: [OffersComponent],
+  declarations: [CreateOfferComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
-    CreateOfferModule
+    FormsModule
   ]
 })
-export class OffersModule { }
+export class CreateOfferModule { }
