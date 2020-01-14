@@ -4,6 +4,7 @@ import { ChatMessage, OfferMessage, TextMessage, Offer, TransportTextMessage  } 
 import { ChatService } from '../chat.service';
 import { AuthService } from '../../auth/auth.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-conversation',
@@ -36,9 +37,11 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       message: new FormControl('', Validators.required)
     });
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.chatId = params.get('id');
-    });
+    this.route.queryParams.pipe(map(params => params.id as string || undefined))
+      .subscribe(id => {
+        console.log(id);
+        this.chatId = id;
+      });
   }
 
   ngAfterViewInit() {
@@ -54,6 +57,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   async onSubmit() {
+    console.log(this.chatId);
     this.chatService.send(new TransportTextMessage(this.chatId, this.writeGroup.controls.message.value));
     this.writeGroup.controls.message.setValue('');
   }

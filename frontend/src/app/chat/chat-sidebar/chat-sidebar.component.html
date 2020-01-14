@@ -1,10 +1,19 @@
-<div class="list-group list-group-flush chat-selector-wrapper">
-  <a class="list-group-item list-group-item-action flex-column align-items-start chat-selector" [routerLink]="['.']" [queryParams]="{ id: chat.chatId }" *ngFor="let chat of chats">
+<div class="list-group list-group-flush chat-selector-wrapper border-right border-top bg-light">
+  <div class="list-group-item bg-light"><h5>Deine Chats</h5></div>
+  <a class="list-group-item list-group-item-action flex-column align-items-start chat-selector" *ngFor="let chat of chats" [ngClass]="{ 'active': chat.chatId == activeChatId}" [routerLink]="['.']" [queryParams]="{ id: chat.chatId }">
     <div class="d-flex w-100 justify-content-between">
       <h5>{{chat.userId1 === userId ? chat.userId2 : chat.userId1}}</h5>
       <small>3 days ago</small>
     </div>
-    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+    <p class="mb-1"><span class="last-message-sender">{{userId}}</span>{{undefined}}</p>
   </a>
-  <div class="list-group-item"></div>
+  <div class="list-group-item" *ngIf="chats !== undefined && chats.length > 0" style="padding: 0;"></div>
+
+  <div class="row h-100" *ngIf="chats === undefined || chats.length === 0">
+    <div class="col-sm-12 my-auto">
+      <div class="text-center">
+        Du hast noch mit niemandem geschrieben.
+      </div>
+    </div>
+ </div>
 </div>

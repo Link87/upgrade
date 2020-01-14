@@ -10,10 +10,10 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
 
-  private users$: BehaviorSubject<User | undefined>;
+  private users$: BehaviorSubject<User>;
 
   constructor(private http: HttpClient) {
-    this.users$ = new BehaviorSubject<User | undefined>(this.decodeToken(localStorage.getItem('jwtToken')));
+    this.users$ = new BehaviorSubject<User>(this.decodeToken(localStorage.getItem('jwtToken')));
   }
 
   public login(username: string, password: string): Observable<User> {
@@ -59,11 +59,11 @@ export class AuthService {
   }
 
   public get token(): string | undefined {
-    return this.users$.value === undefined ? undefined : this.users$.value.token;
+    return this.users$.value == null ? undefined : this.users$.value.token;
   }
 
-  public get user(): User {
-    return this.users$.value;
+  public get user(): User | undefined {
+    return this.users$.value == null ? undefined : this.users$.value;
   }
 
   public isAuthenticated(): boolean {
