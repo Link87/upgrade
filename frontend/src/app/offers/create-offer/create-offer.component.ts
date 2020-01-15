@@ -25,7 +25,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.offerService.createOffer(new Offer(this.offerForm.controls.name.value, this.offerForm.controls.subject.value, this.offerForm.controls.loan.value, this.offerForm.controls.type.value, this.offerForm.controls.description.value, '', ''));
+    this.offerService.createOffer(new Offer(this.offerForm.controls.name.value, this.offerForm.controls.subject.value, this.offerForm.controls.loan.value, this.offerForm.controls.type.value, this.offerForm.controls.description.value, '', '', false));
   }
 
 }
