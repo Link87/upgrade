@@ -1,7 +1,7 @@
-<div class="login-box">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+<div class="login-box" style="margin-top:0px;">
+  <form [formGroup]="offerForm" (ngSubmit)="onSubmit()" novalidate>
     <div class="form-group mb-3">
-      <label for="email_input">Name</label>
+      <label for="name_input">Name</label>
       <input type="text" formControlName="name" class="form-control" id="name_input" placeholder="Name"
         [ngClass]="{ 'is-invalid': submitted && loginForm.controls.email.errors }">
     </div>
@@ -9,42 +9,27 @@
       <label for="subject_input">Fach</label>
       <input type="text" formControlName="subject" class="form-control" id="subject_input" placeholder="Fach"
         [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
-      <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
-        <div *ngIf="loginForm.controls.password.errors.required">Bitte gib Dein Passwort ein.</div>
-        <div *ngIf="loginForm.controls.password.errors.wrongCredentials">Bitte überprüfe E-Mail und Passwort.</div>
-      </div>
     </div>
     <div class="form-group mb-1">
-      <label for="password_input">Gehalt</label>
-      <input type="password" formControlName="password" class="form-control" id="password_input" placeholder="Gehalt"
+      <label for="loan_input">Gehalt</label>
+      <input type="text" formControlName="loan" class="form-control" id="loan_input" placeholder="Gehalt"
         [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
-      <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
-        <div *ngIf="loginForm.controls.password.errors.required">Bitte gib Dein Passwort ein.</div>
-        <div *ngIf="loginForm.controls.password.errors.wrongCredentials">Bitte überprüfe E-Mail und Passwort.</div>
-      </div>
     </div>
     <div class="form-group mb-1">
-      <label for="password_input">Zielgruppe</label>
-      <select class="form-control" id="sel1">
+      <label for="type_input">Zielgruppe</label>
+      <select formControlName="type" class="form-control" id="type_input" placeholder="Gehalt"
+      [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
         <option>Schüler</option>
         <option>Student</option>
       </select>
-      <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
-        <div *ngIf="loginForm.controls.password.errors.required">Bitte gib Dein Passwort ein.</div>
-        <div *ngIf="loginForm.controls.password.errors.wrongCredentials">Bitte überprüfe E-Mail und Passwort.</div>
-      </div>
     </div>
     <div class="form-group mb-1">
-      <label for="password_input">Beschreibung</label>
-      <input type="password" formControlName="password" class="form-control" id="password_input"
+      <label for="description_input">Beschreibung</label>
+      <input type="text" formControlName="description" class="form-control" id="decription_input"
         placeholder="Beschreibung" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
-      <div *ngIf="submitted && loginForm.controls.password.errors" class="invalid-feedback">
-        <div *ngIf="loginForm.controls.password.errors.required">Bitte gib Dein Passwort ein.</div>
-        <div *ngIf="loginForm.controls.password.errors.wrongCredentials">Bitte überprüfe E-Mail und Passwort.</div>
-      </div>
     </div>
     <div class="d-flex justify-content-center">
-      <button type="submit" class="btn btn-login btn-primary">Inserat erstellen</button>
+      <button type="submit" class="btn btn-login btn-primary" style="margin-top:2px;">Inserat erstellen</button>
     </div>
   </form>
-</div>
+ </div>

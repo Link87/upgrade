@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Offer } from './offer';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,13 @@ export class OffersService {
   }
 
   getOffers() {
-    this.http.get<Offer[]>("http://localhost:3000/api/v1/offers").subscribe(offers => {
+    this.http.get<Offer[]>('http://localhost:3000/api/v1/offers').subscribe(offers => {
       this.offers.push(...offers);
     });
+  }
+
+  createOffer() {
+    this.http.post<any>('http://localhost:3000/api/v1/offers/new',
+      new Offer('Kevin', 'MaLo', 123, 'Student', 'Test', '', '')).subscribe(offers => {});
   }
 }

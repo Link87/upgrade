@@ -18,6 +18,7 @@ import { OffersComponent } from './offers/offers.component';
 import { OffersModule } from './offers/offers.module';
 import { PetitionsModule } from './petitions/petitions.module';
 import { ProfileModule } from './profile/profile.module';
+import { httpInterceptorProviders } from './http-interceptors';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { ProfileModule } from './profile/profile.module';
     PetitionsModule,
     ProfileModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
