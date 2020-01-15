@@ -1,13 +1,16 @@
 import * as express from 'express';
 import { Offer } from '../../models/offer';
-import { User } from '../../models/User';
 import { OfferService } from '../../services/OfferService';
+import { auth } from './auth';
+import { AuthenticationService } from '../../services/AuthenticationService';
 
 class OfferRoute {
 
     private readonly router = express.Router();
 
-    constructor(offerService: OfferService) {
+    constructor(offerService: OfferService, authenticationService: AuthenticationService) {
+
+        const authentication = auth.bind(null, authenticationService)
 
         this.router.get('/', async (
             _req: express.Request,
@@ -16,17 +19,16 @@ class OfferRoute {
                 res.status(200).contentType('application/json').send(requestedOffers);
         });
 
-        this.router.post('/new', async (
+        this.router.post('/new', authentication, async (
             req: express.Request,
             res: express.Response) => {
                 const offer: Offer = req.body;
 
-                const user: User | null = (req as any).user;
-                if (user === null) {
+                if (res.locals.user === null) {
                     res.status(400).send('error');
                     return;
                 }
-                offer.owner = user?.id!;
+                offer.owner = res.locals.user?.id!;
 
                 const id = await offerService.createOffer(offer);
                 res.status(200).contentType('application/json').send({
@@ -35,14 +37,13 @@ class OfferRoute {
                 });
             });
 
-        this.router.delete('/:id', async (
+        this.router.delete('/:id', authentication, async (
             req: express.Request,
             res: express.Response) => {
                 const id = req.params.id;
 
                 const offer = await offerService.getOffer(id);
-                const user: User | null = (req as any).user;
-                if (!(user?.id === offer?.owner)) {
+                if (!(res.locals.user?.id === offer?.owner)) {
                     res.status(400).send('error');
                     return;
                 }
@@ -62,15 +63,15 @@ class OfferRoute {
                 res.status(200).contentType('application/json').send(offer);
             });
 
-        this.router.put('/:id', async (
+        this.router.put('/:id', authentication, async (
             req: express.Request,
             res: express.Response) => {
                 const id = req.params.id;
                 const newOffer = req.body;
 
                 const oldOffer = await offerService.getOffer(id);
-                const user: User | null = (req as any).user;
-                if (!(user?.id === oldOffer?.owner)) {
+
+                if (!(res.locals.user?.id === oldOffer?.owner)) {
                     res.status(400).send('error');
                     return;
                 }
@@ -91,8 +92,8 @@ class OfferRoute {
     }
 }
 
-export function offers(offerService: OfferService): express.Router {
-    return new OfferRoute(offerService).getRouter();
+export function offers(offerService: OfferService, authenticationService: AuthenticationService): express.Router {
+    return new OfferRoute(offerService, authenticationService).getRouter();
 }
 
 export default offers;

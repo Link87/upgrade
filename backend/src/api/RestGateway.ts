@@ -32,7 +32,7 @@ export class RestGateway {
         });
 
         api.use('/profile', profile(profileService));
-        api.use('/offers', offers(offerService));
+        api.use('/offers', offers(offerService, authenticationService));
 
         // endpoint invalid (=> 404 not found)
         api.use(async (

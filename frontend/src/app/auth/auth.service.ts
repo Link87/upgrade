@@ -59,11 +59,11 @@ export class AuthService {
   }
 
   public get token(): string {
-    return this.users$.value.token;
+    return (this.users$.value === null) ? undefined : this.users$.value.token;
   }
 
   public get user(): User {
-    return this.users$.value;
+    return (this.users$ == null) ? undefined : this.users$.value;
   }
 
   public isAuthenticated(): boolean {

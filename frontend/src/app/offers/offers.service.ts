@@ -18,8 +18,7 @@ export class OffersService {
     });
   }
 
-  createOffer() {
-    this.http.post<any>('http://localhost:3000/api/v1/offers/new',
-      new Offer('Kevin', 'MaLo', 123, 'Student', 'Test', '', '')).subscribe(offers => {});
+  createOffer(offer: Offer) {
+    this.http.post<any>('http://localhost:3000/api/v1/offers/new', offer).subscribe(offers => {});
   }
 }
