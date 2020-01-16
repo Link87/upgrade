@@ -1,34 +1,34 @@
-import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ChatMessage, OfferMessage, TextMessage, Offer, TransportTextMessage  } from '../../models/chat.models';
+import { ChatMessage, TransportTextMessage  } from '../../models/chat.models';
 import { ChatService } from '../chat.service';
 import { AuthService } from '../../auth/auth.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.scss']
 })
-export class ConversationComponent implements OnInit, AfterViewInit {
+export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   writeGroup: FormGroup;
 
-  @ViewChild('scrollable', { static:  false }) private scrollable: ElementRef;
+  @ViewChild('scrollable', { static: false }) private scrollable: ElementRef;
   @ViewChildren('messages') private messagesInDom: QueryList<any>;
 
-  messages: ChatMessage[] = [];
-  private userId = '';
+  private messages: ChatMessage[] = [];
   private chatId = '';
+  private messageSubscription: Subscription;
 
-  constructor(private chatService: ChatService, private authService: AuthService, private route: ActivatedRoute) {
-    this.chatService.messages.subscribe(data => {
-      this.messages.push(data);
-    });
-
-    this.authService.getObserver().subscribe(user => {
-      this.userId = user.userId;
+  constructor(private chatService: ChatService, private authService: AuthService, private route: ActivatedRoute, private router: Router) {
+    this.messageSubscription = this.chatService.messageEvents.subscribe(isMessageEvent => {
+      this.updateChatHistory();
+      if (isMessageEvent && this.chatId) {
+        this.chatService.setRead(this.chatId);
+      }
     });
   }
 
@@ -39,8 +39,11 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
     this.route.queryParams.pipe(map(params => params.id as string || undefined))
       .subscribe(id => {
-        console.log(id);
         this.chatId = id;
+        this.updateChatHistory();
+        if (this.chatId) {
+          this.chatService.setRead(this.chatId);
+        }
       });
   }
 
@@ -50,16 +53,28 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   scrollToBottom = () => {
     try {
+      if (this.scrollable !== undefined) {
         this.scrollable.nativeElement.scrollTop = this.scrollable.nativeElement.scrollHeight;
+      }
     } catch (err) {
       console.error(err);
     }
   }
 
   async onSubmit() {
-    console.log(this.chatId);
+    if (this.writeGroup.controls.message.value === '') {
+      return;
+    }
     this.chatService.send(new TransportTextMessage(this.chatId, this.writeGroup.controls.message.value));
     this.writeGroup.controls.message.setValue('');
   }
 
+  private updateChatHistory() {
+    this.messages = this.chatService.getMessagesOf(this.chatId);
+  }
+
+
+  ngOnDestroy() {
+    this.messageSubscription.unsubscribe();
+  }
 }

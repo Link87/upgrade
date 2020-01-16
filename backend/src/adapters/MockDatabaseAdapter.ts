@@ -77,4 +77,15 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
         this.chatMessages.push(deepCopy(message));
     }
 
+    public async setRead(userId: string, chatId: string): Promise<void> {
+        const chat = this.chats.find(c => c.chatId === chatId);
+        if (chat === undefined) {
+            return;
+        }
+        this.chatMessages.filter(message => message.chatId === chatId)
+            .filter(message => message.from1to2 ? chat.userId2 === userId : chat.userId1 === userId)
+            .forEach(message => {
+                message.unread = false;
+            });
+    }
 }

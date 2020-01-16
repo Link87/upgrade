@@ -1,19 +1,33 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
+import { ChatService } from '../chat/chat.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
 
   visible = true;
   @Output() paddingUpdate = new EventEmitter<boolean>();
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService) {}
+  unreadCount: number;
+  private messageSubscription: Subscription;
+
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
+              chatService: ChatService) {
+
+    this.unreadCount = chatService.getUnreadCount();
+    this.messageSubscription = chatService.messageEvents.subscribe(() => {
+      this.unreadCount = chatService.getUnreadCount();
+    });
+  }
 
   ngOnInit() {
     this.router.events.pipe(
@@ -33,7 +47,6 @@ export class NavbarComponent implements OnInit {
     .subscribe(event => {
       this.setVisible(event.navbar === undefined || event.navbar); // show the navbar?
     });
-
   }
 
   setVisible(visible: boolean) {
@@ -52,6 +65,10 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/logout']);
+  }
+
+  ngOnDestroy() {
+    this.messageSubscription.unsubscribe();
   }
 
 }

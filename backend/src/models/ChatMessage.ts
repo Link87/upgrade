@@ -5,6 +5,7 @@ export class ChatMessage {
                 public readonly from1to2: boolean,
                 public readonly time: number,
                 public readonly messageType: string,
+                public unread: boolean = true,
                 ) {
     }
 

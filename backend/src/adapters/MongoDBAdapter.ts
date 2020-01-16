@@ -71,4 +71,7 @@ export class MongoDBAdapter implements IDatabaseAdapter {
         return;
     }
 
+    public async setRead(_userId: string, _chatId: string): Promise<void> {
+        return;
+    }
 }

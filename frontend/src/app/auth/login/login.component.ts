@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls.password.value)
     .subscribe(
       user => {
-        console.log(user);
         this.router.navigateByUrl(this.redirect);
       },
       error => {

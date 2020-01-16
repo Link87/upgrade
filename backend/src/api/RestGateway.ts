@@ -3,6 +3,7 @@ import { AuthenticationService } from '../services/AuthenticationService';
 import { ChatService } from '../services/ChatService';
 import { ProfileService } from '../services/ProfileService';
 import { UserService } from '../services/UserService';
+import ChatGateway from './ChatGateway';
 import chat from './rest/chat';
 import profile from './rest/profile';
 
@@ -13,7 +14,8 @@ export class RestGateway {
     constructor(profileService: ProfileService,
                 chatService: ChatService,
                 userService: UserService,
-                authenticationService: AuthenticationService) {
+                authenticationService: AuthenticationService,
+                chatGateway: ChatGateway) {
         this.router = express.Router();
 
         // create middleware for v1 api version
@@ -21,7 +23,7 @@ export class RestGateway {
         this.router.use('/v1', api);
 
         api.use('/profile', profile(profileService));
-        api.use('/chat', chat(chatService, userService, authenticationService));
+        api.use('/chat', chat(chatService, userService, authenticationService, chatGateway));
 
         // endpoint invalid (=> 404 not found)
         api.use(async (

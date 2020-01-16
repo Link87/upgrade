@@ -1,4 +1,17 @@
 .chat-selector-wrapper {
-  height: calc(100vh - 62px);
+  height: calc(100vh - 125px);
   overflow-y: auto;
+}
+
+.button-wrapper {
+  padding: 0;
+  height: 62px;
+}
+
+.message-preview {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 200px;
+  display: block;
+  overflow: hidden
 }

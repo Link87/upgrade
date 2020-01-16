@@ -18,7 +18,6 @@ export class ChatGateway {
     public listen(server: Server) {
         const io = socketio.listen(server);
         io.origins('*:*');
-        console.log(this.authentication);
         io.use(async (socket, next) => {
             if (socket.handshake.query && socket.handshake.query.token) {
                 const result = await this.authentication.authenticateToken(socket.handshake.query.token);
@@ -55,11 +54,9 @@ export class ChatGateway {
                                                 transportMsg.chatId,
                                                 senderId === chat.userId1,
                                                 new Date().getTime(),
-                                                transportMsg.text);
+                                                transportMsg.text,
+                                                true);
 
-                // TODO remove dis when frontend fully understands chat ids
-                (message as any).senderId = senderId;
-                (message as any).receiverId = receiverId;
                 console.log(message);
                 this.chatService.appendChatMessage(message);
 
@@ -68,9 +65,32 @@ export class ChatGateway {
                     this.sockets.get(receiverId)?.emit('text_message', message);
                 }
             });
+            socket.on('read', async (chatId: string) => {
+                const chat: Chat | undefined = await this.chatService.getChatById(chatId);
+                if (chat === undefined) {
+                    console.error(`Invalid chat id: ${chatId}`);
+                    return;
+                }
+                if (socket.user.id !== chat.userId1 && socket.user.id !== chat.userId2) {
+                    console.error('Authorization error: message from chat-foreign user');
+                    return;
+                }
+
+                this.chatService.setRead(socket.user.id, chatId);
+            });
+            socket.on('read_all', async () => {
+                const userId: string = socket.user.id;
+                for (const chat of await this.chatService.getChatsForUser(userId)) {
+                    this.chatService.setRead(userId, chat.chatId);
+                }
+            });
         });
 
         return io;
+    }
+
+    public notifyClient(userId: string, event: string, data: any) {
+        this.sockets.get(userId)?.emit(event, data);
     }
 
 }

@@ -30,4 +30,8 @@ export class ChatService {
         this.database.appendChatMessage(message);
     }
 
+    public async setRead(userId: string, chatId: string): Promise<void> {
+        this.database.setRead(userId, chatId);
+    }
+
 }

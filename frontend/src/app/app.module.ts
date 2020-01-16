@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 
 import { AppComponent } from './app.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -16,6 +18,8 @@ import { ChatComponent } from './chat/chat.component';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
 import { httpInterceptorProviders } from './http-interceptors';
+
+registerLocaleData(localeDe, 'de');
 
 @NgModule({
   declarations: [

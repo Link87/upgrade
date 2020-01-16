@@ -26,4 +26,6 @@ export interface IDatabaseAdapter {
 
     appendChatMessage(message: ChatMessage): Promise<void>;
 
+    setRead(userId: string, chatId: string): Promise<void>;
+
 }

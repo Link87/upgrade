@@ -5,6 +5,7 @@ import { User } from '../../models/User';
 import { AuthenticationService } from '../../services/AuthenticationService';
 import { ChatService } from '../../services/ChatService';
 import { UserService } from '../../services/UserService';
+import ChatGateway from '../ChatGateway';
 import { HttpError } from '../ErrorHandler';
 import auth from './auth';
 
@@ -15,11 +16,12 @@ class ChatRoute {
 
     constructor(private readonly chatService: ChatService,
                 userService: UserService,
-                authenticationService: AuthenticationService) {
+                authenticationService: AuthenticationService,
+                chatGateway: ChatGateway) {
 
         const authentication = auth.bind(null, authenticationService);
 
-        this.router.put('', authentication, async (
+        this.router.post('', authentication, async (
             req: express.Request,
             res: express.Response,
             next: express.NextFunction) => {
@@ -89,7 +91,10 @@ class ChatRoute {
 
             await this.chatService.deleteChat(chat);
 
-            res.sendStatus(200);
+            chatGateway.notifyClient(chat.userId1, 'delete_chat', chat);
+            chatGateway.notifyClient(chat.userId2, 'delete_chat', chat);
+
+            res.contentType('text').status(200).send();
         });
 
         this.router.get('/user/:id', authentication, async (
@@ -142,8 +147,9 @@ class ChatRoute {
 
 export function chat(chatService: ChatService,
                      userService: UserService,
-                     authenticationService: AuthenticationService): express.Router {
-    return new ChatRoute(chatService, userService, authenticationService).getRouter();
+                     authenticationService: AuthenticationService,
+                     chatGateway: ChatGateway): express.Router {
+    return new ChatRoute(chatService, userService, authenticationService, chatGateway).getRouter();
 }
 
 export default chat;

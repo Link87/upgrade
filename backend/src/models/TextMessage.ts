@@ -7,8 +7,9 @@ export class TextMessage extends ChatMessage {
                 from1to2: boolean,
                 time: number,
                 public readonly text: string,
+                unread: boolean = true,
                 ) {
-        super(messageId, chatId, from1to2, time, 'text' );
+        super(messageId, chatId, from1to2, time, 'text', unread);
     }
 
 }
