@@ -3,7 +3,7 @@ import { AuthenticationService } from '../services/AuthenticationService';
 import { OfferService } from '../services/OfferService';
 import { ProfileService } from '../services/ProfileService';
 import offers from './rest/offers';
-import profile from './rest/profile';
+import UserRoute from './rest/users/userRoute';
 
 export class RestGateway {
 
@@ -31,7 +31,8 @@ export class RestGateway {
             next();
         });
 
-        api.use('/profile', profile(profileService));
+
+        api.use('/users', new UserRoute(profileService, authenticationService).getRouter());
         api.use('/offers', offers(offerService, authenticationService));
 
         // endpoint invalid (=> 404 not found)
