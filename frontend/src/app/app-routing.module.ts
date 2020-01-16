@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   { path: 'offers', component: OffersComponent },
   { path: 'offers/create', component: CreateOfferComponent, canActivate: [AuthGuard]},
   { path: 'petitions', component: PetitionsComponent},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'users/:id/profile', component: ProfileComponent},
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
