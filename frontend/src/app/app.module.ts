@@ -17,6 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './chat/chat.component';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
+import { OffersComponent } from './offers/offers.component';
+import { OffersModule } from './offers/offers.module';
+import { RequestsModule } from './requests/requests.module';
 import { httpInterceptorProviders } from './http-interceptors';
 
 registerLocaleData(localeDe, 'de');
@@ -40,6 +43,8 @@ registerLocaleData(localeDe, 'de');
     AppRoutingModule,
     AuthModule,
     ChatModule,
+    OffersModule,
+    RequestsModule,
   ],
   providers: [
     httpInterceptorProviders,

@@ -9,9 +9,13 @@ import { ChatComponent } from './chat/chat.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthComponent } from './auth/auth.component';
 import { AuthRoutingModule } from './auth/auth-routing.module';
+import { OffersComponent } from './offers/offers.component';
+import { RequestsComponent } from './requests/requests.component';
 
 const appRoutes: Routes = [
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: 'offers', component: OffersComponent },
+  { path: 'requests', component: RequestsComponent},
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

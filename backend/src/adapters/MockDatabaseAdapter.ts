@@ -1,6 +1,7 @@
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
 import { Chat } from '../models/Chat';
 import { ChatMessage } from '../models/ChatMessage';
+import { Offer } from '../models/offer';
 import { User } from '../models/User';
 
 function deepCopy(obj: any): any {
@@ -13,6 +14,7 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
     private users: User[] = [];
     private chats: Chat[] = [];
     private chatMessages: ChatMessage[] = [];
+    private offers: Offer[] = [];
 
     public async getUserById(id: string): Promise<User | undefined> {
         return this.users.find(user => user.id === id);
@@ -88,4 +90,26 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
                 message.unread = false;
             });
     }
+
+    public async getOffers(): Promise<Offer[]> {
+        return this.offers;
+    }
+
+    public async getOffer(id: string): Promise<Offer | null> {
+        return this.offers.filter(offer => offer.id === id)[0];
+    }
+
+    public async deleteOffer(id: string) {
+        this.offers = this.offers.filter(offer => id !== offer.id);
+    }
+
+    public async updateOffer(offer: Offer) {
+        this.deleteOffer(offer.id);
+        this.createOffer(offer);
+    }
+
+    public async createOffer(offer: Offer) {
+        this.offers.push(offer);
+    }
+
 }

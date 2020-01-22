@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConversationComponent } from './conversation/conversation.component';
 import { ChatSidebarComponent } from './chat-sidebar/chat-sidebar.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -16,8 +16,8 @@ import { ChatSidebarComponent } from './chat-sidebar/chat-sidebar.component';
   ],
   imports: [
     CommonModule,
-    ChatRoutingModule,
     ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class ChatModule { }

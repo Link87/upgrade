@@ -1,5 +1,6 @@
 import { Chat } from '../models/Chat';
 import { ChatMessage } from '../models/ChatMessage';
+import { Offer } from '../models/offer';
 import { User } from '../models/User';
 
 export interface IDatabaseAdapter {
@@ -28,4 +29,13 @@ export interface IDatabaseAdapter {
 
     setRead(userId: string, chatId: string): Promise<void>;
 
+    getOffers(): Promise<Offer[]>;
+
+    getOffer(id: string): Promise<Offer | null>;
+
+    deleteOffer(id: string): Promise<void>;
+
+    updateOffer(offer: Offer): Promise<void>;
+
+    createOffer(offer: Offer): Promise<void>;
 }
