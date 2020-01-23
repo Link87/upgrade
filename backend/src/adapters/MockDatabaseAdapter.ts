@@ -110,6 +110,7 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
 
     public async createOffer(offer: Offer) {
         this.offers.push(offer);
+        console.log(offer);
     }
 
 }

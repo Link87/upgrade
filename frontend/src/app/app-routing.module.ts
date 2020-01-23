@@ -10,12 +10,16 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthComponent } from './auth/auth.component';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 import { OffersComponent } from './offers/offers.component';
-import { RequestsComponent } from './requests/requests.component';
+import { CreateOfferComponent } from './offers/create-offer/create-offer.component';
+import { ProfileComponent } from './profile/profile.component';
+import { RequestsComponent } from './offers/requests.component';
 
 const appRoutes: Routes = [
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'offers', component: OffersComponent },
-  { path: 'requests', component: RequestsComponent},
+  { path: 'offers/create', component: CreateOfferComponent, canActivate: [AuthGuard]},
+  { path: 'petitions', component: RequestsComponent},
+  { path: 'users/:id/profile', component: ProfileComponent},
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

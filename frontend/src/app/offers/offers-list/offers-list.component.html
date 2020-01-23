@@ -1,0 +1,17 @@
+
+<div class="container-fluid mt-5" *ngFor="let offer of this.offers">
+    <div class="container my-article mb-5">
+        <h2 class="my-title">{{offer.name}}</h2>
+        <div class="row my-article-row">
+            <div class="col-12 col-md-4">Fach: {{offer.subject}}</div>
+            <div class="col-12 col-md-4">Bezahlung: {{offer.loan}}€</div>
+            <div class="col-12 col-md-4">Klasse: {{offer.type}}</div>
+        </div>
+        <h3>Beschreibung</h3>
+        <p>{{offer.description}}</p>
+
+        <button class="btn navbar-btn btn-outline-primary ml-2" (click)="this.router.navigate(['/users/' + offer.owner + '/profile'])">Profil Ansehen</button>
+        <button type="button" class="btn btn-outline-primary my-2 my-sm-0">Chat starten</button>
+        <button type="button" class="btn btn-outline-primary my-2 my-sm-0" *ngIf="offer.owner == this.authenticationService.user.userId" (click)="this.deleteOffer(offer.id)">Entfernen</button>
+    </div>
+</div>

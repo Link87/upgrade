@@ -84,7 +84,7 @@ export class MongoDBAdapter implements IDatabaseAdapter {
     }
 
     public async updateOffer(offer: Offer): Promise<void> {
-        await this.client!.db(this.dbName).collection(this.offerCollection).updateOne({id: offer.id }, offer);
+        await this.client!.db(this.dbName).collection(this.offerCollection).updateOne({ id: offer.id }, offer);
     }
 
     public async createOffer(offer: Offer): Promise<void> {

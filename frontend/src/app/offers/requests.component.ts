@@ -5,15 +5,15 @@ import { of, OperatorFunction, forkJoin, interval } from 'rxjs';
 import { Offer } from './offer';
 
 @Component({
-  selector: 'app-offers',
-  templateUrl: './offers.component.html',
-  styleUrls: ['./offers.component.scss']
+  selector: 'app-requests',
+  templateUrl: './requests.component.html',
+  styleUrls: ['./requests.component.scss']
 })
-export class OffersComponent implements OnInit {
+export class RequestsComponent implements OnInit {
 
   constructor(private offerService:OffersService) { }
 
-  filter: (Offer) => boolean = (offer) => !offer.isRequest;
+  filter: (Offer) => boolean = (offer) => offer.isRequest;
   query: string;
 
   ngOnInit() {
@@ -22,7 +22,7 @@ export class OffersComponent implements OnInit {
 
   onSubmit () {
     this.filter = (offer: Offer) => {
-      if (offer.isRequest) {
+      if (!offer.isRequest) {
         return false
       }
 

@@ -16,4 +16,13 @@ export class ProfileService {
         }
     }
 
+    public async updateProfile(id: string, profile: Profile) {
+        const user = (await this.userService.getUserById(id));
+
+        if (user !== null) {
+            user.profile = profile;
+            await this.userService.updateUser(user);
+        }
+    }
+
 }

@@ -1,0 +1,27 @@
+<div class="profile-box" style="margin-top:8%; margin-left: 3%; margin-right: 3%;">
+
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" novalidate *ngIf="this.id === this.authService.user.userId">
+    <div class="form-group mb-3">
+      <label for="name_input">Name</label>
+      <input type="text" formControlName="name" class="form-control" id="name_input" placeholder="Name">
+    </div>
+    <div class="form-group mb-3">
+      <label for="description_input">Beschreibung</label>
+      <input type="text" formControlName="description" class="form-control" id="description_input" placeholder="Beschreibung">
+    </div>
+    <button class="btn navbar-btn btn-outline-primary ml-2" type="submit">Speichern</button>
+  </form>
+
+  <div class="container-fluid mt-5" *ngIf="this.id !== this.authService.user.userId" style="background-color: #ecf0f1; padding: 30px">
+    <div>
+      <h1>{{this.profile.name}}</h1>
+    </div>
+    <div class="form-group mb-3">
+      {{this.profile.description}}
+    </div>
+  </div>
+
+  <app-offers-list [(offerFilter)]="this.filter">
+  </app-offers-list>
+</div>

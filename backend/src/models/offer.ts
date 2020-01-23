@@ -5,6 +5,7 @@ export class Offer {
                 public readonly type: string,
                 public readonly description: string,
                 public owner: string,
-                public id: string) {
+                public id: string,
+                public isRequest: boolean) {
     }
 }

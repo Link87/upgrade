@@ -4,6 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
+    "compile-and-start": "npm run compile && npm run start",
     "start": "node dist/index.js",
     "compile": "npm run lint; rm -rf dist/; tsc -p .",
     "compile-win": "rm -rf dist/ && tsc -p .",

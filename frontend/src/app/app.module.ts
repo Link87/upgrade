@@ -23,6 +23,7 @@ import { RequestsModule } from './requests/requests.module';
 import { httpInterceptorProviders } from './http-interceptors';
 
 registerLocaleData(localeDe, 'de');
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -45,10 +46,9 @@ registerLocaleData(localeDe, 'de');
     ChatModule,
     OffersModule,
     RequestsModule,
+    ProfileModule
   ],
-  providers: [
-    httpInterceptorProviders,
-  ],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
