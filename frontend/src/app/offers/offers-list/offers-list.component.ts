@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Offer } from '../offer';
 import { OffersService } from '../offers.service';
-import { switchMap, filter } from 'rxjs/operators';
+import { switchMap, filter, delay } from 'rxjs/operators';
 import { of, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-offers-list',
@@ -16,7 +17,7 @@ export class OffersListComponent implements OnInit {
   @Input() offerFilter: (offer: Offer) => boolean = (offer) => true;
   private offerSubscription: Subscription
 
-  constructor(private offerService: OffersService, private router: Router) { }
+  constructor(private offerService: OffersService, private router: Router, private authenticationService: AuthService) {  }
 
   ngOnInit() {
     this.refreshOffers()
@@ -34,6 +35,14 @@ export class OffersListComponent implements OnInit {
     ).subscribe(input => {
       this.offers.push(input)
     });
+  }
+
+  async deleteOffer(id: string) {
+    this.offerService.deleteOffer(id).pipe(
+      delay(50)
+    ).subscribe(result => {
+      this.refreshOffers()
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {

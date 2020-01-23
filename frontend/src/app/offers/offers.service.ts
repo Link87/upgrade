@@ -18,4 +18,9 @@ export class OffersService {
   createOffer(offer: Offer) {
     this.http.post<any>('http://localhost:3000/api/v1/offers/new', offer).subscribe(offers => {});
   }
+
+  deleteOffer(id: string): Observable<any> {
+    return this.http.delete<any>(`http://localhost:3000/api/v1/offers/${id}`)
+  }
+
 }

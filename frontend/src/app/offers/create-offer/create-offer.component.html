@@ -28,8 +28,19 @@
       <input type="text" formControlName="description" class="form-control" id="decription_input"
         placeholder="Beschreibung" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
     </div>
+
+    <div class="form-group mb-1">
+      <label for="type_input">Angebot</label>
+      <select formControlName="request" class="form-control" id="request_input" placeholder="Gesuche">
+        <option value="true">Gesuche</option>
+        <option value="false">Angebot</option>
+      </select>
+    </div>
+
     <div class="d-flex justify-content-center">
       <button type="submit" class="btn btn-login btn-primary" style="margin-top:2px;">Inserat erstellen</button>
     </div>
+
+
   </form>
  </div>

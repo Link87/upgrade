@@ -13,12 +13,13 @@ import { OffersComponent } from './offers/offers.component';
 import { PetitionsComponent } from './petitions/petitions.component';
 import { CreateOfferComponent } from './offers/create-offer/create-offer.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RequestsComponent } from './offers/requests.component';
 
 const appRoutes: Routes = [
   { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'offers', component: OffersComponent },
   { path: 'offers/create', component: CreateOfferComponent, canActivate: [AuthGuard]},
-  { path: 'petitions', component: PetitionsComponent},
+  { path: 'petitions', component: RequestsComponent},
   { path: 'users/:id/profile', component: ProfileComponent},
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },

@@ -12,5 +12,6 @@
 
         <button class="btn navbar-btn btn-outline-primary ml-2" (click)="this.router.navigate(['/users/' + offer.owner + '/profile'])">Profil Ansehen</button>
         <button type="button" class="btn btn-outline-primary my-2 my-sm-0">Chat starten</button>
+        <button type="button" class="btn btn-outline-primary my-2 my-sm-0" *ngIf="offer.owner == this.authenticationService.user.userId" (click)="this.deleteOffer(offer.id)">Entfernen</button>
     </div>
 </div>

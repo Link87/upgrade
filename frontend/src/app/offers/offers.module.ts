@@ -4,10 +4,11 @@ import { OffersComponent } from './offers.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CreateOfferModule } from './create-offer/create-offer.module';
 import { OffersListComponent } from './offers-list/offers-list.component';
+import { RequestsComponent } from './requests.component';
 
 
 @NgModule({
-  declarations: [OffersComponent, OffersListComponent],
+  declarations: [OffersComponent, OffersListComponent, RequestsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -16,6 +17,7 @@ import { OffersListComponent } from './offers-list/offers-list.component';
   ],
   exports: [
     OffersComponent,
+    RequestsComponent,
     OffersListComponent
   ]
 })
