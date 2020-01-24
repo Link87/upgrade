@@ -50,8 +50,15 @@ export class OffersListComponent implements OnInit, OnChanges {
     });
   }
 
-  private startChat(userId: string) {
-    this.chatService.startChat(userId);
+  private openChat(userId: string) {
+    const chat = this.chatService.getChats().find(c => c.userId1 === userId || c.userId2 === userId);
+    if (chat === undefined) {
+      this.chatService.createChatWith(userId).subscribe(c => {
+        this.router.navigate(['chat'], { queryParams: { id: c.chatId } });
+      });
+    } else {
+      this.router.navigate(['chat'], { queryParams: { id: chat.chatId } });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

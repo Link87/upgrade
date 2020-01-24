@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { ProfileService } from '../profile/profile.service';
 import { Profile } from '../profile/profile';
+import { tap } from 'rxjs/operators';
 
 type ExtendedChat = Chat & { profile1: Profile, profile2: Profile };
 
@@ -122,6 +123,11 @@ export class ChatService implements OnDestroy {
     return this.http.get<Chat[]>(`${this.apiPath}/user/${userId}`);
   }
 
+  public createChatWith(userId: string): Observable<Chat> {
+    return this.http.post<Chat>(`${this.apiPath}?receiverId=${userId}`, null)
+        .pipe(tap(chat => this.initializeChat(chat)));
+  }
+
   public deleteChat(chatId: string): void {
     this.http.delete<void>(`${this.apiPath}/${chatId}`).subscribe(_ => {
       this.chats = this.chats.filter(c => c.chatId === chatId);
@@ -198,10 +204,6 @@ export class ChatService implements OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  public startChat(userId: string) {
-    return; // TODO
   }
 
 }

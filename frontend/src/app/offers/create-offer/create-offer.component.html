@@ -5,40 +5,58 @@
       <div class="container card-body">
         <form [formGroup]="offerForm" (ngSubmit)="onSubmit()" novalidate>
           <div class="form-group mb-3">
-            <label for="name_input">Name</label>
-            <input type="text" formControlName="name" class="form-control" id="name_input" placeholder="Name"
-              [ngClass]="{ 'is-invalid': submitted && loginForm.controls.email.errors }">
+            <label for="type_input">Typ Deiner Anzeige</label>
+            <select formControlName="request" class="form-control" id="request_input" placeholder="Gesuche">
+              <option value="request" [selected]="true">Gesuch</option>
+              <option value="offer">Angebot</option>
+            </select>
+            <small class="form-text text-muted" *ngIf="this.offerForm.controls.request.value === 'offer'">Du möchtest für Andere Nachhilfe anbieten.</small>
+            <small class="form-text text-muted" *ngIf="this.offerForm.controls.request.value === 'request'">Du möchtest Nachhilfe bekommen.</small>
+
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="name_input">Titel</label>
+            <input type="text" formControlName="name" class="form-control" id="name_input" placeholder="Titel"
+              [ngClass]="{ 'is-invalid': submitted && offerForm.controls.name.errors }">
+            <div *ngIf="submitted && offerForm.controls.name.errors" class="invalid-feedback">
+              <div *ngIf="offerForm.controls.name.errors.required">Bitte gib einen Titel für Deine Anzeige ein.</div>
+            </div>
           </div>
           <div class="form-group mb-3">
             <label for="subject_input">Fach</label>
             <input type="text" formControlName="subject" class="form-control" id="subject_input" placeholder="Fach"
-              [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
+              [ngClass]="{ 'is-invalid': submitted && offerForm.controls.subject.errors }">
+            <div *ngIf="submitted && offerForm.controls.subject.errors" class="invalid-feedback">
+              <div *ngIf="offerForm.controls.subject.errors.required">Bitte gib ein Fach ein.</div>
+            </div>
           </div>
           <div class="form-group mb-3">
             <label for="loan_input">Gehalt</label>
             <input type="text" formControlName="loan" class="form-control" id="loan_input" placeholder="Gehalt"
-              [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
+              [ngClass]="{ 'is-invalid': submitted && offerForm.controls.loan.errors }">
+            <div *ngIf="submitted && offerForm.controls.loan.errors" class="invalid-feedback">
+              <div *ngIf="offerForm.controls.loan.errors.required">Bitte gib die ungefähre Höhe des Lohnes an.</div>
+            </div>
           </div>
           <div class="form-group mb-3">
             <label for="type_input">Zielgruppe</label>
             <select formControlName="type" class="form-control" id="type_input" placeholder="Gehalt"
-              [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
+              [ngClass]="{ 'is-invalid': submitted && offerForm.controls.type.errors }">
               <option>Schüler</option>
               <option>Student</option>
             </select>
+            <div *ngIf="submitted && offerForm.controls.type.errors" class="invalid-feedback">
+              <div *ngIf="offerForm.controls.type.errors.required">Bitte wähle eine Zielgruppe für Deine Anzeige.</div>
+            </div>
           </div>
           <div class="form-group mb-3">
             <label for="description_input">Beschreibung</label>
             <input type="text" formControlName="description" class="form-control" id="decription_input"
-              placeholder="Beschreibung" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }">
-          </div>
-
-          <div class="form-group mb-3">
-            <label for="type_input">Angebot</label>
-            <select formControlName="request" class="form-control" id="request_input" placeholder="Gesuche">
-              <option value="true">Gesuche</option>
-              <option value="false" selected="selected">Angebot</option>
-            </select>
+              placeholder="Beschreibung" [ngClass]="{ 'is-invalid': submitted && offerForm.controls.description.errors }">
+            <div *ngIf="submitted && offerForm.controls.description.errors" class="invalid-feedback">
+              <div *ngIf="offerForm.controls.description.errors.required">Bitte gib Deiner Anzeige eine passende Beschreibung.</div>
+            </div>
           </div>
 
           <div class="d-flex justify-content-center mt-3">

@@ -70,14 +70,14 @@ export class ChatSidebarComponent implements OnInit, OnDestroy {
   }
 
   private checkActiveChatId(id: string) {
-    if (this.chats !== undefined && this.chats.find(c => c.chatId === id) === undefined) {
+    /*if (this.chats !== undefined && this.chats.find(c => c.chatId === id) === undefined) {
       this.router.navigate([],
         {
           relativeTo: this.route,
           queryParams: { id: null },
           queryParamsHandling: 'merge'
         });
-    }
+    }*/
   }
 
   onDelete() {

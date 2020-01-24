@@ -15,8 +15,8 @@ export class OffersService {
     return this.http.get<Offer[]>('http://localhost:3000/api/v1/offers')
   }
 
-  createOffer(offer: Offer) {
-    this.http.post<any>('http://localhost:3000/api/v1/offers/new', offer).subscribe(offers => {});
+  createOffer(offer: Offer): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/api/v1/offers/new', offer);
   }
 
   deleteOffer(id: string): Observable<any> {

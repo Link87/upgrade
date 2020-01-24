@@ -1,5 +1,5 @@
 <div class="container-fluid mt-5" *ngFor="let offer of this.offers">
-    <div class="container card bg-light mb-5">
+    <div class="container card bg-light border-primary mb-5">
       <div class="card-body">
         <h3 class="card-title">{{offer.name}}</h3>
         <h5 class="card-subtitle" *ngIf="!offer.isRequest">Angebot von {{offer.owner}}</h5>
@@ -20,11 +20,12 @@
             <button type="button" class="btn btn-outline-primary my-2 ml-2"
                 *ngIf="offer.owner !== this.authenticationService.user.userId" (click)="this.deleteOffer(offer.id)"
                 (click)="this.router.navigate(['/users/' + offer.owner + '/profile'])">Profil
-                Ansehen</button>
+                ansehen</button>
             <button type="button" class="btn btn-outline-danger my-2 ml-2"
-                *ngIf="offer.owner == this.authenticationService.user.userId"
+                *ngIf="offer.owner === this.authenticationService.user.userId"
                 (click)="this.deleteOffer(offer.id)">Entfernen</button>
-            <button type="button" class="btn btn-primary my-2 ml-2" (click)="startChat(offer.owner)">Chat starten</button>
+            <button type="button" class="btn btn-primary my-2 ml-2" (click)="openChat(offer.owner)"
+                *ngIf="offer.owner !== this.authenticationService.user.userId">Anschreiben</button>
         </div>
       </div>
     </div>
