@@ -14,14 +14,14 @@ import { ChatService } from 'src/app/chat/chat.service';
 })
 export class OffersListComponent implements OnInit, OnChanges {
 
-  private offers: Offer[] = []
+  private offers: Offer[] = [];
   private offerSubscription: Subscription;
   @Input() offerFilter: (offer: Offer) => boolean = (offer) => true;
 
   constructor(private offerService: OffersService,
               private router: Router,
               private chatService: ChatService,
-              private authenticationService: AuthService) {  }
+              private authService: AuthService) {  }
 
   ngOnInit() {
     this.refreshOffers();

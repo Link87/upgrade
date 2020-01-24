@@ -1,8 +1,13 @@
 <div class="container-fluid mt-5">
   <div class="container mb-5">
     <div class="card">
-      <div class="card-header" *ngIf="this.id !== this.authService.user.userId">Profil von {{this.profile.name}}</div>
-      <div class="card-header" *ngIf="this.id === this.authService.user.userId">Mein Profil</div>
+      <div class="card-header d-flex justify-content-between">
+        <div class="my-auto" *ngIf="this.id !== this.authService.user.userId">Profil von {{this.profile.name}}</div>
+        <div class="my-auto" *ngIf="this.id === this.authService.user.userId">Mein Profil</div>
+        <button type="button" class="btn btn-primary" *ngIf="this.id === this.authService.user.userId"
+          routerLink="./edit">Bearbeiten</button>
+      </div>
+
       <div class="card-body">
         <div class="container card-body">
           <dl class="row">
@@ -18,10 +23,7 @@
             <em *ngIf="!this.profile.description">Keine Beschreibung vorhanden</em>
             {{this.profile.description}}
           </p>
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-primary mt-3" *ngIf="this.id === this.authService.user.userId"
-              routerLink="./edit">Bearbeiten</button>
-          </div>
+
         </div>
       </div>
     </div>

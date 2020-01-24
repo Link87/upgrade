@@ -11,36 +11,41 @@ import { Offer } from './offer';
 })
 export class RequestsComponent implements OnInit {
 
-  constructor(private offerService:OffersService) { }
+  constructor(private offerService: OffersService) { }
 
-  filter: (Offer) => boolean = (offer) => offer.isRequest;
   query: string;
+  filter: (offer: Offer) => boolean = (offer) => offer.isRequest;
 
   ngOnInit() {
-    
+
   }
 
-  onSubmit () {
+  onSubmit() {
     this.filter = (offer: Offer) => {
       if (!offer.isRequest) {
-        return false
+        return false;
       }
 
-      if (this.query.split(" ").length === 0) {
-        return true
+      if (this.query.split(' ').length === 0) {
+        return true;
       }
 
-      for (let chunk of this.query.split(" ").map(chunk => chunk.toLowerCase())) {
-        if (offer.description.toLowerCase().includes(chunk) 
-          || offer.name.toLowerCase().includes(chunk) 
-          || offer.subject.toLowerCase().includes(chunk) 
+      for (const chunk of this.query.split(' ').map(chunk => chunk.toLowerCase())) {
+        if (offer.description.toLowerCase().includes(chunk)
+          || offer.name.toLowerCase().includes(chunk)
+          || offer.subject.toLowerCase().includes(chunk)
           || offer.type.toLowerCase().includes(chunk)) {
 
           return true;
         }
-      }      
-      return false
-    }
+      }
+      return false;
+    };
+  }
+
+  private clearFilters() {
+    this.query = '';
+    this.onSubmit();
   }
 
 }

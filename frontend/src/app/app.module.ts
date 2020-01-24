@@ -19,7 +19,6 @@ import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
 import { OffersComponent } from './offers/offers.component';
 import { OffersModule } from './offers/offers.module';
-import { RequestsModule } from './requests/requests.module';
 import { httpInterceptorProviders } from './http-interceptors';
 
 registerLocaleData(localeDe, 'de');
@@ -45,7 +44,6 @@ import { ProfileModule } from './profile/profile.module';
     AuthModule,
     ChatModule,
     OffersModule,
-    RequestsModule,
     ProfileModule
   ],
   providers: [httpInterceptorProviders],
