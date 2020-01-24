@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  
+
   private submitted = false;
   private wrongCredentials = false;
 
@@ -46,6 +46,7 @@ export class RegisterComponent implements OnInit {
 
   async onSubmit() {
     console.log("TEST.");
+    this.submitted = true;
     // TODO got token, should set profile data with a second request
     if (this.registerForm.invalid) {
       return false;
@@ -56,7 +57,7 @@ export class RegisterComponent implements OnInit {
     .subscribe(
         user => {
           console.log(user);
-          this.router.navigateByUrl('/register-succ');
+          this.router.navigateByUrl('/register-success');
         },
         error => {
           console.error(error);

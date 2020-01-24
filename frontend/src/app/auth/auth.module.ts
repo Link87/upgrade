@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { LogoutComponent } from './logout/logout.component';
+import { RegisterSuccComponent } from './register-succ/register-succ.component';
 
 
 
@@ -13,6 +14,7 @@ import { LogoutComponent } from './logout/logout.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
+    RegisterSuccComponent,
     AuthComponent,
     LogoutComponent
   ],
