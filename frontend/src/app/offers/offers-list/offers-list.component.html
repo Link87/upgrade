@@ -1,36 +1,50 @@
 <div class="container-fluid mt-5" *ngFor="let offer of this.offers">
-  <div class="container card bg-light border-primary mb-5">
-    <div class="card-body">
-      <h3 class="card-title">{{offer.name}}</h3>
-      <h5 class="card-subtitle" *ngIf="!offer.isRequest">Angebot von {{offer.owner}}</h5>
-      <h5 class="card-subtitle" *ngIf="offer.isRequest">Gesuch von {{offer.owner}}</h5>
-      <div class="row my-article-row mt-2">
+  <div class="container">
+    <div class="card bg-light">
+      <div class="card-header d-flex justify-content-between">
+        <div class="my-auto" *ngIf="this.authService.user && offer.owner === this.authService.user.userId">
+          <span *ngIf="!offer.isRequest">Angebot von Dir</span>
+          <span *ngIf="offer.isRequest">Gesuch von Dir</span>
+        </div>
+        <div class="my-auto" *ngIf="!this.authService.user || offer.owner !== this.authService.user.userId">
+          <span *ngIf="!offer.isRequest">Angebot von {{offer.owner}}</span>
+          <span *ngIf="offer.isRequest">Gesuch von {{offer.owner}}</span>
+        </div>
+
+        <div>
+          <button type="button" class="btn btn-outline-primary ml-2"
+            *ngIf="!this.authService.user || offer.owner !== this.authService.user.userId"
+            (click)="this.deleteOffer(offer.id)"
+            (click)="this.router.navigate(['/users/' + offer.owner + '/profile'])">Profil
+            ansehen</button>
+          <button type="button" class="btn btn-primary ml-2" (click)="openChat(offer.owner)"
+            *ngIf="this.authService.user && offer.owner !== this.authService.user.userId">Anschreiben</button>
+          <button type="button" class="btn btn-outline-danger ml-2"
+            *ngIf="this.authService.user && offer.owner === this.authService.user.userId"
+            (click)="this.deleteOffer(offer.id)">Löschen</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{{offer.name}}</h3>
+
+        <div class="row my-article-row mt-2">
           <div class="col-12 col-md-4"><strong>Fach:</strong> {{offer.subject}}</div>
           <div class="col-12 col-md-4"><strong>Bezahlung:</strong> {{offer.loan}}€</div>
           <div class="col-12 col-md-4"><strong>Klasse:</strong> {{offer.type}}</div>
+        </div>
+
+        <p class="mt-2">
+          <strong>Beschreibung:</strong><br>
+          <em *ngIf="!offer.description">Keine Beschreibung vorhanden</em>
+          {{offer.description}}
+        </p>
+
       </div>
 
-      <p class="mt-2">
-        <strong>Beschreibung:</strong><br>
-        <em *ngIf="!offer.description">Keine Beschreibung vorhanden</em>
-        {{offer.description}}
-      </p>
-
-      <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-outline-primary my-2 ml-2"
-              *ngIf="!this.authService.user || offer.owner !== this.authService.user.userId" (click)="this.deleteOffer(offer.id)"
-              (click)="this.router.navigate(['/users/' + offer.owner + '/profile'])">Profil
-              ansehen</button>
-          <button type="button" class="btn btn-primary my-2 ml-2" (click)="openChat(offer.owner)"
-              *ngIf="this.authService.user && offer.owner !== this.authService.user.userId">Anschreiben</button>
-          <button type="button" class="btn btn-outline-danger my-2 ml-2"
-              *ngIf="this.authService.user && offer.owner === this.authService.user.userId"
-              (click)="this.deleteOffer(offer.id)">Entfernen</button>
-      </div>
     </div>
   </div>
 </div>
 
 <div class="text-center mt-4" *ngIf="this.offers !== undefined && this.offers.length === 0">
-    Keine Anzeigen vorhanden. Passe ggf. Deine Suche an.
+  Keine Anzeigen vorhanden. Passe ggf. Deine Suche an.
 </div>

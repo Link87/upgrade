@@ -2,9 +2,9 @@
   <div class="container mb-5">
     <div class="card">
       <div class="card-header d-flex justify-content-between">
-        <div class="my-auto" *ngIf="this.id !== this.authService.user.userId">Profil von {{this.profile.name}}</div>
-        <div class="my-auto" *ngIf="this.id === this.authService.user.userId">Mein Profil</div>
-        <button type="button" class="btn btn-primary" *ngIf="this.id === this.authService.user.userId"
+        <div class="my-auto" *ngIf="!this.authService.user || this.id !== this.authService.user.userId">Profil von {{this.profile.name}}</div>
+        <div class="my-auto" *ngIf="this.authService.user && this.id === this.authService.user.userId">Mein Profil</div>
+        <button type="button" class="btn btn-primary" *ngIf="this.authService.user && this.id === this.authService.user.userId"
           routerLink="./edit">Bearbeiten</button>
       </div>
 
@@ -31,8 +31,8 @@
 </div>
 
 <div class="d-flex justify-content-center mt-5">
-  <h1 class="my-title" *ngIf="this.id !== this.authService.user.userId">Inserate von {{this.profile.name}}</h1>
-  <h1 class="my-title" *ngIf="this.id === this.authService.user.userId">Meine Inserate</h1>
+  <h1 class="my-title" *ngIf="!this.authService.user || this.id !== this.authService.user.userId">Inserate von {{this.profile.name}}</h1>
+  <h1 class="my-title" *ngIf="this.authService.user && this.id === this.authService.user.userId">Meine Inserate</h1>
 </div>
 
 <app-offers-list class="col-md-8" [(offerFilter)]="this.filter"></app-offers-list>

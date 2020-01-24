@@ -51,7 +51,8 @@ export class OffersListComponent implements OnInit, OnChanges {
   }
 
   private openChat(userId: string) {
-    const chat = this.chatService.getChats().find(c => c.userId1 === userId || c.userId2 === userId);
+    const chats = this.chatService.getChats();
+    const chat = chats === undefined ? undefined : chats.find(c => c.userId1 === userId || c.userId2 === userId);
     if (chat === undefined) {
       this.chatService.createChatWith(userId).subscribe(c => {
         this.router.navigate(['chat'], { queryParams: { id: c.chatId } });

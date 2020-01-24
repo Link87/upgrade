@@ -6,9 +6,12 @@
 
   <div class="navbar-collapse collapse" id="navbarSupportedContent">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/offers">Angebote</a>
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/requests">Gesuche</a>
-      <a class="nav-item nav-link d-inline-flex" routerLinkActive="active" routerLink="/chat">Nachrichten
+      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/offers" [routerLinkActiveOptions]="{exact:
+        true}">Angebote</a>
+      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/requests" [routerLinkActiveOptions]="{exact:
+        true}">Gesuche</a>
+      <a class="nav-item nav-link d-inline-flex" routerLinkActive="active" routerLink="/chat" [routerLinkActiveOptions]="{exact:
+        true}">Nachrichten
         <div class="badge badge-primary badge-pill d-inline-flex align-items-center ml-1" *ngIf="unreadCount > 0">
           <span>{{unreadCount}}</span>
         </div>
