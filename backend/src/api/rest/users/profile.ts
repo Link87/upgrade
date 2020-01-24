@@ -1,9 +1,9 @@
 import * as express from 'express';
+import { AuthenticationService } from '../../../services/AuthenticationService';
 import { ProfileService } from '../../../services/ProfileService';
 import { auth } from '../auth';
-import { AuthenticationService } from '../../../services/AuthenticationService';
 
-export default class ProfileRoute {
+class ProfileRoute {
 
     private readonly router = express.Router({ mergeParams: true });
 
@@ -24,20 +24,20 @@ export default class ProfileRoute {
             req: express.Request,
             res: express.Response) => {
             const id = req.params.id;
-            const profileData = req.body
+            const profileData = req.body;
 
             if (res.locals.user == null || res.locals.user.id !== id) {
                 res.status(401).send({
-                    error: "unauthorized"
-                })
+                    error: 'unauthorized',
+                });
 
-                return
+                return;
             }
 
-            this.profileService.updateProfile(id, profileData)
+            this.profileService.updateProfile(id, profileData);
 
             res.status(200).contentType('application/json').send({
-                status: "ok"
+                status: 'ok',
             });
         });
     }
@@ -46,3 +46,9 @@ export default class ProfileRoute {
         return this.router;
     }
 }
+
+export function profile(profileService: ProfileService, authenticationService: AuthenticationService): express.Router {
+    return new ProfileRoute(profileService, authenticationService).getRouter();
+}
+
+export default profile;

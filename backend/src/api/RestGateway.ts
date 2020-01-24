@@ -7,9 +7,10 @@ import { UserService } from '../services/UserService';
 import ChatGateway from './ChatGateway';
 import chat from './rest/chat';
 import offers from './rest/offers';
-import UserRoute from './rest/users/userRoute';
-import ProfileRoute from './rest/users/profile';
+import profile from './rest/users/profile';
+import user from './rest/users/user';
 
+// tslint:disable: no-shadowed-variable
 export class RestGateway {
 
     private readonly router: express.Router;
@@ -39,9 +40,9 @@ export class RestGateway {
             next();
         });
 
-        api.use('/profile', new ProfileRoute(profileService, authenticationService).getRouter());
+        api.use('/profile', profile(profileService, authenticationService));
         api.use('/chat', chat(chatService, userService, authenticationService, chatGateway));
-        api.use('/users', new UserRoute(profileService, authenticationService).getRouter());
+        api.use('/users', user(profileService, authenticationService));
         api.use('/offers', offers(offerService, authenticationService));
         // endpoint invalid (=> 404 not found)
         api.use(async (

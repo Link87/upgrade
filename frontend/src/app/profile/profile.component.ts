@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OffersComponent } from '../offers/offers.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, Subscription } from 'rxjs';
@@ -13,40 +13,32 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
-  idObservable: Subject<string> = new Subject()
-  id: string
-  filter: (offer: Offer) => boolean = (offer) => true
-  profileForm: FormGroup;
-  profile: Profile = new Profile("", "");
+  idObservable: Subject<string> = new Subject();
+  id: string;
+  profile: Profile = new Profile('', '');
   routerSubscription: Subscription;
+  filter: (offer: Offer) => boolean = (offer) => true;
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private proifleService: ProfileService, private authService: AuthService, private router: Router) { 
-    const id = this.route.snapshot.params['id']
-    this.idObservable.next(id)
+  constructor(private route: ActivatedRoute,
+              private profileService: ProfileService,
+              private authService: AuthService,
+              private router: Router) {
+
+    const id = this.route.snapshot.params.id;
+    this.idObservable.next(id);
 
     this.routerSubscription = this.router.events.subscribe(event => {
-      this.idObservable.next(this.route.snapshot.params['id'])
-    })
+      this.idObservable.next(this.route.snapshot.params.id);
+    });
 
     this.idObservable.subscribe(newId => {
-      this.id = newId
+      this.id = newId;
       this.filter = (offer) => {
-        const value = newId === offer.owner
-        return value
-      }
-
-      this.proifleService.getProfile(newId).subscribe(profile => {
-        this.profile = profile
-        this.profileForm.controls.name.setValue(profile.name)
-        this.profileForm.controls.description.setValue(profile.description)
-      })
-    })
-
-    this.profileForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+        const value = newId === offer.owner;
+        return value;
+      };
     });
   }
 
@@ -55,13 +47,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
-  }
-
-  async onSubmit() {
-    this.proifleService.updateProfile(this.id, new Profile(
-      this.profileForm.value.name,
-      this.profileForm.value.description
-    ))
   }
 
 }

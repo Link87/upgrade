@@ -45,7 +45,6 @@ export class RegisterComponent implements OnInit {
 
 
   async onSubmit() {
-    console.log("TEST.");
     this.submitted = true;
     // TODO got token, should set profile data with a second request
     if (this.registerForm.invalid) {

@@ -1,47 +1,36 @@
-<div class="profile-box" style="margin-top:8%; margin-left: 3%; margin-right: 3%;">
+<div class="container-fluid mt-5">
+  <div class="container mb-5">
+    <div class="card">
+      <div class="card-header" *ngIf="this.id !== this.authService.user.userId">Profil von {{this.profile.name}}</div>
+      <div class="card-header" *ngIf="this.id === this.authService.user.userId">Mein Profil</div>
+      <div class="card-body">
+        <div class="container card-body">
+          <dl class="row">
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9">Max Mustermann</dd>
 
-  <div class="row d-flex justify-content-center flex-grow-1 center-section">
-    <div class="col-xl-4 col-md-6 col-sm-10">
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" novalidate
-        *ngIf="this.id === this.authService.user.userId">
+            <dt class="col-sm-3">Stadt</dt>
+            <dd class="col-sm-9">Königs Wusterhausen</dd>
+          </dl>
 
-        <div class="form-group mb-3">
-          <label for="name_input">Name</label>
-          <input type="text" formControlName="name" class="form-control" id="name_input" placeholder="Name">
-        </div>
-        <div class="form-group mb-3">
-          <label for="description_input">Beschreibung</label>
-          <input type="text" formControlName="description" class="form-control" id="description_input"
-            placeholder="Beschreibung">
-        </div>
-        <button class="btn navbar-btn btn-outline-primary ml-2" type="submit">Speichern</button>
-      </form>
-    </div>
-  </div>
-
-  
-  <div class="container-fluid mt-5" *ngIf="this.id !== this.authService.user.userId">
-    <div class="container my-article mb-5">
-      <div class="d-flex justify-content-center">
-        <h2 class="my-title">Profil von {{this.profile.name}}</h2>
-      </div>
-      <div class="row my-article-row">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm">
-              <div class="col-12 col-md-4" style="font-weight: bold;">Vorname:</div>
-              <div class="col-12 col-md-4" style="font-weight: bold;">Name:</div>
-              <div class="col-12 col-md-4" style="font-weight: bold;">Stadt:</div>
-            </div>
+          <p>
+            <strong>Beschreibung</strong><br>
+            <em *ngIf="!this.profile.description">Keine Beschreibung vorhanden</em>
+            {{this.profile.description}}
+          </p>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary mt-3" *ngIf="this.id === this.authService.user.userId"
+              routerLink="./edit">Bearbeiten</button>
           </div>
         </div>
       </div>
-      <p>{{this.profile.description}}</p>
     </div>
   </div>
-  <div class="d-flex justify-content-center">
-    <h1 class="my-title">Inserate von {{this.profile.name}}</h1>
-  </div>
-  <app-offers-list [(offerFilter)]="this.filter">
-  </app-offers-list>
 </div>
+
+<div class="d-flex justify-content-center mt-5">
+  <h1 class="my-title" *ngIf="this.id !== this.authService.user.userId">Inserate von {{this.profile.name}}</h1>
+  <h1 class="my-title" *ngIf="this.id === this.authService.user.userId">Meine Inserate</h1>
+</div>
+
+<app-offers-list class="col-md-8" [(offerFilter)]="this.filter"></app-offers-list>

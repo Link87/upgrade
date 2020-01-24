@@ -13,13 +13,15 @@ import { OffersComponent } from './offers/offers.component';
 import { CreateOfferComponent } from './offers/create-offer/create-offer.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RequestsComponent } from './offers/requests.component';
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 
 const appRoutes: Routes = [
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'offers', component: OffersComponent },
-  { path: 'offers/create', component: CreateOfferComponent, canActivate: [AuthGuard]},
-  { path: 'petitions', component: RequestsComponent},
+  { path: 'offers/create', component: CreateOfferComponent, canActivate: [AuthGuard] },
+  { path: 'requests', component: RequestsComponent},
   { path: 'users/:id/profile', component: ProfileComponent},
+  { path: 'users/:id/profile/edit', component: ProfileEditComponent, canActivate: [AuthGuard] },
   { path: '', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

@@ -1,14 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { Chat, ChatMessage, TextMessage, TransportTextMessage } from '../models/chat.models';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { ProfileService } from '../profile/profile.service';
 import { Profile } from '../profile/profile';
 
-type ExtendedChat = Chat & { profile1: Profile, profile2: Profile }
+type ExtendedChat = Chat & { profile1: Profile, profile2: Profile };
 
 @Injectable({
   providedIn: 'root'
@@ -86,7 +85,7 @@ export class ChatService implements OnDestroy {
     this.fetchChatsOf(this.userId)
         .subscribe((chats: Chat[]) => {
           for (const chat of chats) {
-            this.initializeChat(chat as ExtendedChat)
+            this.initializeChat(chat as ExtendedChat);
           }
         });
   }
@@ -199,6 +198,10 @@ export class ChatService implements OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  public startChat(userId: string) {
+    return; // TODO
   }
 
 }

@@ -1,13 +1,20 @@
 <div class="container-fluid mt-5" *ngFor="let offer of this.offers">
-    <div class="container my-article mb-5">
-        <h2 class="my-title">{{offer.name}}</h2>
-        <div class="row my-article-row">
-            <div class="col-12 col-md-4">Fach: {{offer.subject}}</div>
-            <div class="col-12 col-md-4">Bezahlung: {{offer.loan}}€</div>
-            <div class="col-12 col-md-4">Klasse: {{offer.type}}</div>
+    <div class="container card bg-light mb-5">
+      <div class="card-body">
+        <h3 class="card-title">{{offer.name}}</h3>
+        <h5 class="card-subtitle" *ngIf="!offer.isRequest">Angebot von {{offer.owner}}</h5>
+        <h5 class="card-subtitle" *ngIf="offer.isRequest">Gesuch von {{offer.owner}}</h5>
+        <div class="row my-article-row mt-2">
+            <div class="col-12 col-md-4"><strong>Fach:</strong> {{offer.subject}}</div>
+            <div class="col-12 col-md-4"><strong>Bezahlung:</strong> {{offer.loan}}€</div>
+            <div class="col-12 col-md-4"><strong>Klasse:</strong> {{offer.type}}</div>
         </div>
-        <h3>Beschreibung</h3>
-        <p>{{offer.description}}</p>
+
+        <p class="mt-2">
+          <strong>Beschreibung:</strong><br>
+          <em *ngIf="!offer.description">Keine Beschreibung vorhanden</em>
+          {{offer.description}}
+        </p>
 
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-outline-primary my-2 ml-2"
@@ -17,7 +24,8 @@
             <button type="button" class="btn btn-outline-danger my-2 ml-2"
                 *ngIf="offer.owner == this.authenticationService.user.userId"
                 (click)="this.deleteOffer(offer.id)">Entfernen</button>
-            <button type="button" class="btn btn-primary my-2 ml-2">Chat starten</button>
+            <button type="button" class="btn btn-primary my-2 ml-2" (click)="startChat(offer.owner)">Chat starten</button>
         </div>
+      </div>
     </div>
 </div>
