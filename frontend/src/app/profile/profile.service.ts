@@ -12,10 +12,10 @@ export class ProfileService {
   }
 
   getProfile(id: string): Observable<Profile> {
-    return this.http.get<Profile>(`http://localhost:3000/api/v1/users/${id}/profile`)
+    return this.http.get<Profile>(`http://${window.location.hostname}:3000/api/v1/users/${id}/profile`)
   }
 
   updateProfile(id: string, profile: Profile) {
-    this.http.put<any>(`http://localhost:3000/api/v1/users/${id}/profile`, profile).subscribe(offers => {});
+    this.http.put<any>(`http://${window.location.hostname}:3000/api/v1/users/${id}/profile`, profile).subscribe(offers => {});
   }
 }

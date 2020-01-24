@@ -5,6 +5,10 @@ import { tap } from 'rxjs/operators';
 import { Chat, ChatMessage, TextMessage, TransportTextMessage } from '../models/chat.models';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { ProfileService } from '../profile/profile.service';
+import { Profile } from '../profile/profile';
+
+type ExtendedChat = Chat & { profile1: Profile, profile2: Profile }
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +18,7 @@ export class ChatService implements OnDestroy {
   private socket: SocketIOClient.Socket = undefined;
   private subscription: Subscription;
 
-  private chats: Chat[] | undefined = undefined;
+  private chats: ExtendedChat[] | undefined = undefined;
   private chatMessages: Map<string, ChatMessage[]> = new Map();
 
   private messages$: Subject<boolean> = new Subject();
@@ -23,7 +27,7 @@ export class ChatService implements OnDestroy {
 
   private readonly apiPath = `http://${window.location.hostname}:3000/api/v1/chat`;
 
-  constructor(private readonly http: HttpClient, authService: AuthService) {
+  constructor(private readonly http: HttpClient, private readonly profileService: ProfileService, authService: AuthService) {
     console.log('Service created');
     if (authService.isAuthenticated()) {
       this.userId = authService.user.userId;
@@ -51,12 +55,7 @@ export class ChatService implements OnDestroy {
     this.socket.on('text_message', (message: TextMessage) => {
       if (this.chatMessages.get(message.chatId) === undefined) {
         this.fetchChat(message.chatId).subscribe(chat => {
-          this.chats = this.chats === undefined ? [] : this.chats;
-          this.chats.push(chat);
-          this.fetchMessagesOf(chat.chatId).subscribe(messages => {
-            this.chatMessages.set(chat.chatId, messages);
-            this.messages$.next(true);
-          });
+          this.initializeChat(chat);
         });
         return;
       }
@@ -85,15 +84,31 @@ export class ChatService implements OnDestroy {
 
   private initializeData() {
     this.fetchChatsOf(this.userId)
-        .pipe(tap(chats => this.chats = chats))
         .subscribe((chats: Chat[]) => {
           for (const chat of chats) {
-            this.fetchMessagesOf(chat.chatId).subscribe(messages => {
-              this.chatMessages.set(chat.chatId, messages);
-              this.messages$.next(true);
-            });
+            this.initializeChat(chat as ExtendedChat)
           }
         });
+  }
+
+  private initializeChat(chat: Chat) {
+    this.profileService.getProfile(chat.userId1).subscribe(profile1 => {
+      this.profileService.getProfile(chat.userId2).subscribe(profile2 => {
+        (chat as ExtendedChat).profile1 = profile1;
+        (chat as ExtendedChat).profile2 = profile2;
+        this.chats = this.chats === undefined ? [] : this.chats;
+        const ex = this.chats.findIndex(c => c.chatId === chat.chatId);
+        if (ex !== -1) {
+          this.chats[ex] = chat as ExtendedChat;
+        } else {
+          this.chats.push(chat as ExtendedChat);
+        }
+        this.fetchMessagesOf(chat.chatId).subscribe(messages => {
+          this.chatMessages.set(chat.chatId, messages);
+          this.messages$.next(true);
+        });
+      });
+    });
   }
 
   private fetchChat(chatId: string): Observable<Chat> {
@@ -125,7 +140,8 @@ export class ChatService implements OnDestroy {
   }
 
   public getReceiverOfChat(chat: Chat): string {
-    return chat.userId1 === this.userId ? chat.userId2 : chat.userId1;
+    return chat.userId1 === this.userId ?
+        (chat as ExtendedChat).profile2.name : (chat as ExtendedChat).profile1.name;
   }
 
   public getUnreadCount(chat?: Chat): number {
@@ -138,9 +154,6 @@ export class ChatService implements OnDestroy {
   }
 
   public setRead(chatId?: string): void {
-    console.log(chatId);
-    console.log(this.chatMessages.get(chatId));
-
     const messages = chatId === undefined ?
         Array.prototype.concat.apply([], Array.from(this.chatMessages.values())) as ChatMessage[] :
         this.chatMessages.get(chatId);
@@ -167,7 +180,8 @@ export class ChatService implements OnDestroy {
       return '';
     }
     const chat = this.chats.find(c => c.chatId === message.chatId);
-    return message.from1to2 ? chat.userId1 : chat.userId2;
+    return message.from1to2 ?
+      (chat as ExtendedChat).profile1.name : (chat as ExtendedChat).profile2.name;
   }
 
   public getReceiverOfMessage(message: ChatMessage): string {
@@ -175,7 +189,8 @@ export class ChatService implements OnDestroy {
       return '';
     }
     const chat = this.chats.find(c => c.chatId === message.chatId);
-    return message.from1to2 ? chat.userId2 : chat.userId1;
+    return message.from1to2 ?
+        (chat as ExtendedChat).profile2.name : (chat as ExtendedChat).profile1.name;
   }
 
   public get messageEvents(): Observable<boolean> {
