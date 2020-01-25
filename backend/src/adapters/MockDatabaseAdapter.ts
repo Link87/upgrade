@@ -20,8 +20,8 @@ export class MockDatabaseAdapter implements IDatabaseAdapter {
         return this.users.find(user => user.id === id);
     }
 
-    public async getUserByUsername(id: string): Promise<User | undefined> {
-        return this.users.find(user => user.id === id);
+    public async getUserByUsername(username: string): Promise<User | undefined> {
+        return this.users.find(user => user.loginCredentials.username === username);
     }
 
     public async createUser(user: User): Promise<User> {

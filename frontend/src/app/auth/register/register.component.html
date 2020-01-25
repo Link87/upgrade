@@ -3,18 +3,10 @@
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
 
       <div class="form-group mb-3">
-        <label for="firstname_input">Vorname</label>
-        <input type="text" formControlName="firstname" class="form-control" id="name_input" placeholder="Vorname" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.firstname.errors }">
-        <div *ngIf="submitted && registerForm.controls.firstname.errors" class="invalid-feedback">
-          <div *ngIf="registerForm.controls.firstname.errors.required">Bitte gib Deinen Vornamen ein.</div>
-        </div>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="lastname_input">Nachname</label>
-        <input type="text" formControlName="lastname" class="form-control" id="surname_input" placeholder="Nachname" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.lastname.errors }">
-        <div *ngIf="submitted && registerForm.controls.lastname.errors" class="invalid-feedback">
-          <div *ngIf="registerForm.controls.lastname.errors.required">Bitte gib Deinen Nachnamen ein.</div>
+        <label for="name_input">Name</label>
+        <input type="text" formControlName="name" class="form-control" id="name_input" placeholder="Name" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }">
+        <div *ngIf="submitted && registerForm.controls.name.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.name.errors.required">Bitte gib Deinen vollständigen Namen ein.</div>
         </div>
       </div>
 
@@ -24,7 +16,7 @@
         <label for="street_input">Straße</label>
         <input type="text" formControlName="street" class="form-control" id="street_input" placeholder="Straße" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.street.errors }">
         <div *ngIf="submitted && registerForm.controls.street.errors" class="invalid-feedback">
-          <div *ngIf="registerForm.controls.street.errors.required">Bitte gib Deinen Straße ein.</div>
+          <div *ngIf="registerForm.controls.street.errors.required">Bitte gib Deine Straße ein.</div>
         </div>
       </div>
 
@@ -32,7 +24,7 @@
         <label for="house_number_input">Hausnummer</label>
         <input type="text" formControlName="housenumber" class="form-control" id="house_number_input" placeholder="Hausnummer" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.housenumber.errors }">
         <div *ngIf="submitted && registerForm.controls.housenumber.errors" class="invalid-feedback">
-          <div *ngIf="registerForm.controls.housenumber.errors.required">Bitte gib Deinen Straße ein.</div>
+          <div *ngIf="registerForm.controls.housenumber.errors.required">Bitte gib Deine Hausnummer ein.</div>
         </div>
       </div>
 
@@ -42,7 +34,7 @@
       <div class="form-group mb-3 col-md-4">
         <label for="zip_code_input">Postleitzahl</label>
         <input type="text" formControlName="zipcode" class="form-control" id="zip_code_input" placeholder="Postleitzahl" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.zipcode.errors }">
-        <div *ngIf="submitted && registerForm.controls.firstname.errors" class="invalid-feedback">
+        <div *ngIf="submitted && registerForm.controls.zipcode.errors" class="invalid-feedback">
           <div *ngIf="registerForm.controls.zipcode.errors.required">Bitte gib Deine Postleitzahl ein.</div>
         </div>
       </div>
@@ -50,19 +42,19 @@
       <div class="form-group mb-3 col-md-8">
         <label for="city_input">Stadt</label>
         <input type="text" formControlName="city" class="form-control" id="city_input" placeholder="Stadt" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.city.errors }">
-        <div *ngIf="submitted && registerForm.controls.firstname.errors" class="invalid-feedback">
-          <div *ngIf="registerForm.controls.city.errors.required">Bitte gib Deinen Stadt ein.</div>
+        <div *ngIf="submitted && registerForm.controls.city.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.city.errors.required">Bitte gib Deine Stadt ein.</div>
         </div>
       </div>
     </div>
 
-
     <div class="form-group mb-3">
       <label for="email_input">E-Mail</label>
-      <input type="email" formControlName="email" class="form-control" id="email_input" placeholder="E-Mail-Adresse" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.email.errors }">
+      <input type="text" formControlName="email" class="form-control" id="email_input" placeholder="E-Mail-Adresse" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.email.errors }">
       <div *ngIf="submitted && registerForm.controls.email.errors" class="invalid-feedback">
-        <div *ngIf="loginForm.controls.email.errors.required">Bitte gib Deine E-Mail-Adresse ein.</div>
+        <div *ngIf="registerForm.controls.email.errors.required">Bitte gib Deine E-Mail-Adresse ein.</div>
         <div *ngIf="registerForm.controls.email.errors.email">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+        <div *ngIf="registerForm.controls.email.errors.alreadyExists">Es existiert bereits ein Benutzer mit dieser E-Mail-Adresse.</div>
       </div>
     </div>
 

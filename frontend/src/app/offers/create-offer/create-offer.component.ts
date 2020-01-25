@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OffersService } from '../offers.service';
 import { Form, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Offer } from '../offer';
+import { Offer } from '../../models/offer.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,7 +20,7 @@ export class CreateOfferComponent implements OnInit {
     this.offerForm = this.formBuilder.group({
       name: ['', Validators.required],
       subject: ['', Validators.required],
-      loan: ['', Validators.required],
+      loan: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
       type: ['', Validators.required],
       description: ['', Validators.required],
       request: ['request']

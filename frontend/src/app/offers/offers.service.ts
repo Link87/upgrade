@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Offer } from './offer';
+import { Offer } from '../models/offer.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -12,7 +12,7 @@ export class OffersService {
   }
 
   getOffers(): Observable<Offer[]> {
-    return this.http.get<Offer[]>('http://localhost:3000/api/v1/offers')
+    return this.http.get<Offer[]>('http://localhost:3000/api/v1/offers');
   }
 
   createOffer(offer: Offer): Observable<any> {
@@ -20,7 +20,7 @@ export class OffersService {
   }
 
   deleteOffer(id: string): Observable<any> {
-    return this.http.delete<any>(`http://localhost:3000/api/v1/offers/${id}`)
+    return this.http.delete<any>(`http://localhost:3000/api/v1/offers/${id}`);
   }
 
 }

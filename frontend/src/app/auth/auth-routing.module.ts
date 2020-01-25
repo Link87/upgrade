@@ -25,7 +25,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'register-success',
+    path: 'register/success',
     component: AuthComponent,
     data: { navbar: false },
     children: [

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { OffersService } from './offers.service';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { of, OperatorFunction, forkJoin, interval } from 'rxjs';
-import { Offer } from './offer';
+import { Offer } from '../models/offer.model';
 
 @Component({
   selector: 'app-requests',

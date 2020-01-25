@@ -5,8 +5,8 @@ import { Chat, ChatMessage, TextMessage, TransportTextMessage } from '../models/
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { ProfileService } from '../profile/profile.service';
-import { Profile } from '../profile/profile';
 import { tap } from 'rxjs/operators';
+import { Profile } from '../models/user.model';
 
 type ExtendedChat = Chat & { profile1: Profile, profile2: Profile };
 

@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { OffersComponent } from '../offers/offers.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable, Subscription } from 'rxjs';
-import { Offer } from '../offers/offer';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Profile } from './profile';
+import { Subject, Subscription } from 'rxjs';
+import { Offer } from '../models/offer.model';
 import { ProfileService } from './profile.service';
 import { AuthService } from '../auth/auth.service';
+import { Profile } from '../models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +15,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   idObservable: Subject<string> = new Subject();
   id: string;
-  profile: Profile = new Profile('', '');
+  profile: Profile = Profile.default();
   routerSubscription: Subscription;
   filter: (offer: Offer) => boolean = (offer) => true;
 
@@ -26,8 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private router: Router) {
 
-    const id = this.route.snapshot.params.id;
-    this.idObservable.next(id);
+    this.idObservable.next(this.route.snapshot.params.id);
 
     this.routerSubscription = this.router.events.subscribe(event => {
       this.idObservable.next(this.route.snapshot.params.id);
@@ -35,6 +32,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.idObservable.subscribe(newId => {
       this.id = newId;
+      this.profileService.getProfile(newId).subscribe(profile => {
+        this.profile = profile;
+      });
       this.filter = (offer) => {
         const value = newId === offer.owner;
         return value;

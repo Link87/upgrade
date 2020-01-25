@@ -1,3 +1,4 @@
+import uuid = require('uuid');
 import { IDatabaseAdapter } from '../adapters/IDatabaseAdapter';
 import { LoginCredentials } from '../models/LoginCredentials';
 import { Profile } from '../models/Profile';
@@ -9,7 +10,7 @@ export class UserService {
     }
 
     public async createUser(loginCredentials: LoginCredentials): Promise<User> {
-        const user = new User(loginCredentials.username, new Profile(loginCredentials.username, ''), loginCredentials);
+        const user = new User(uuid(), Profile.default(), loginCredentials);
         return this.database.createUser(user);
     }
 

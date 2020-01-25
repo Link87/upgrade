@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { Offer } from '../offer';
+import { Offer } from '../../models/offer.model';
 import { OffersService } from '../offers.service';
 import { switchMap, filter, delay } from 'rxjs/operators';
 import { of, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ChatService } from 'src/app/chat/chat.service';
+import { ProfileService } from 'src/app/profile/profile.service';
 
 @Component({
   selector: 'app-offers-list',
@@ -19,6 +20,7 @@ export class OffersListComponent implements OnInit, OnChanges {
   @Input() offerFilter: (offer: Offer) => boolean = (offer) => true;
 
   constructor(private offerService: OffersService,
+              private profileService: ProfileService,
               private router: Router,
               private chatService: ChatService,
               private authService: AuthService) {  }

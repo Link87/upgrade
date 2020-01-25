@@ -12,10 +12,16 @@
         <div class="container card-body">
           <dl class="row">
             <dt class="col-sm-3">Name</dt>
-            <dd class="col-sm-9">Max Mustermann</dd>
+            <dd class="col-sm-9">{{this.profile.name}}</dd>
 
-            <dt class="col-sm-3">Stadt</dt>
-            <dd class="col-sm-9">Königs Wusterhausen</dd>
+            <dt class="col-sm-3" *ngIf="this.authService.user && this.id === this.authService.user.userId">Straße/Hausnummer</dt>
+            <dd class="col-sm-9" *ngIf="this.authService.user && this.id === this.authService.user.userId">{{this.profile.street}} {{this.profile.housenumber}}</dd>
+
+            <dt class="col-sm-3" *ngIf="this.authService.user && this.id === this.authService.user.userId">PLZ/Stadt</dt>
+            <dd class="col-sm-9" *ngIf="this.authService.user && this.id === this.authService.user.userId">{{this.profile.zipCode}} {{this.profile.city}}</dd>
+
+            <dt class="col-sm-3" *ngIf="!this.authService.user || this.id !== this.authService.user.userId">Stadt</dt>
+            <dd class="col-sm-9" *ngIf="!this.authService.user || this.id !== this.authService.user.userId">{{this.profile.city}}</dd>
           </dl>
 
           <p>
