@@ -186,7 +186,7 @@ export class ChatService implements OnDestroy {
     }
     const chat = this.chats.find(c => c.chatId === message.chatId);
     return message.from1to2 ?
-      (chat as ExtendedChat).profile1.name : (chat as ExtendedChat).profile2.name;
+      (chat as ExtendedChat).userId1 : (chat as ExtendedChat).userId2;
   }
 
   public getReceiverOfMessage(message: ChatMessage): string {
@@ -195,7 +195,7 @@ export class ChatService implements OnDestroy {
     }
     const chat = this.chats.find(c => c.chatId === message.chatId);
     return message.from1to2 ?
-        (chat as ExtendedChat).profile2.name : (chat as ExtendedChat).profile1.name;
+        (chat as ExtendedChat).userId2 : (chat as ExtendedChat).userId1;
   }
 
   public get messageEvents(): Observable<boolean> {
