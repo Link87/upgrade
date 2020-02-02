@@ -4,11 +4,13 @@
 
 ## Frontend
 
-You can find the frontend files in the `frontend` folder. The frontend is based on Angular 8. 
+You can find the frontend files in the `frontend` folder. The frontend is based on Angular 8.
+
+To deploy production builds you will need a separate web server like [nginx](https://www.nginx.com/).
 
 ### Setup
 
-Run `npm install -g @angular/cli` to install angular. Then use `yarn install` to fetch all packages and you are good to go. Look at [this](frontend/README.md) file for further instructions.
+Run `yarn global add @angular/cli` to install angular. Then use `yarn install` to fetch all packages and you are good to go. Look at [this](frontend/README.md) file for further instructions.
 
 ## Backend
 
